@@ -1,0 +1,30 @@
+<div *ngIf="failureListItems" class="row">
+  <div class="col-md-4">
+    <dx-list
+            height="800px"
+            [dataSource]="failureListItems"
+            [grouped]="true"
+            [collapsibleGroups]="true"
+            [allowItemDeleting]="false"
+            [showSelectionControls]="false"
+            selectionMode="single"
+            [(selectedItems)]="selectedFailureListDeviceItems"
+            (onSelectionChanged)="onSelectionChanged()"
+            style="color: #ffffff">
+      <div *dxTemplate="let item of 'group'" style="color: #ffffff; background: transparent;">
+        <div><img [src]="getImageUrl(item.cust_id)"
+                  style="height: 40px; position: relative; top:0; left: 0; margin-top:5px;">
+          <div style="font-size: large; margin-top: 4px;">{{item.key}}</div>
+        </div>
+      </div>
+      <
+      <div *dxTemplate="let subItem of 'item'" style="color: #ffffff;">
+        <span><b>{{getSourceTypeCaption(subItem.event_source_type)}}:</b></span><span>&nbsp;&nbsp;{{subItem.source_caption}}</span>
+        <span class="label" [ngClass]="getHealthStatusClassName(subItem.health_status)">{{getHealthStatusCaption(subItem.health_status)}}</span>
+      </div>
+    </dx-list>
+  </div>
+  <div class="col-md-8">
+    <app-eventlog-widget [eventLogFilter]="eventLogFilter"></app-eventlog-widget>
+  </div>
+</div>

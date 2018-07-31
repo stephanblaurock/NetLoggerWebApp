@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-3">
+    <h3 style="text-align: center;">Momentanwert</h3>
+    <dx-circular-gauge
+            id="rectangleNeedle"
+            [value]="75"
+            style="height: 250px;">
+      <dxo-value-indicator
+              type="rectangleNeedle"
+              color="#9B870C">
+      </dxo-value-indicator>
+      <dxo-geometry
+              [startAngle]="180"
+              [endAngle]="0">
+      </dxo-geometry>
+      <dxo-scale
+              [startValue]="0"
+              [endValue]="100"
+              [tickInterval]="50">
+        <dxo-label customizeText="Momentanwert"></dxo-label>
+      </dxo-scale>
+    </dx-circular-gauge>
+  </div>
+  <div class="col-md-9">
+    <h3 style="text-align: center;">Verbrauchshistorie der letzten 7 Tage</h3>
+    <dx-button (onClick)="buttonClick();">Daten verändern</dx-button>
+    <dx-chart
+            #mychart
+            id="chartxxx"
+            [dataSource]="chartData"
+            style="height: 250px;"
+            [valueAxis]="valueAxis"
+            [series]="seriesOptions">
+      <dxo-legend [visible]="false"></dxo-legend>
+      <!--dxi-series
+              argumentField="Label"
+              valueField="Value"
+              type="bar"
+              color="#ffaa66">
+      </dxi-series-->
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      <!--dxi-value-axis [tickInterval]="1">
+        <dxo-title text="Verbrauch in kWh"></dxo-title>
+        <dxo-label>
+          <dxo-format
+                  type="largeNumber"
+                  [precision]="0">
+          </dxo-format>
+        </dxo-label>
+        <dxo-grid color="#3C3F41"></dxo-grid>
+      </dxi-value-axis-->
+      <dxo-loading-indicator [show]="true" text="Laster inn data ..."></dxo-loading-indicator>
+    </dx-chart>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <h3 style="text-align: center;">Tagesleistungskurve</h3>
+    <dx-chart
+            [dataSource]="corporationsInfo"
+            style="height: 250px;">
+      <dxi-series valueField="y2005" name="2005"></dxi-series>
+      <dxi-series valueField="y2004" name="2004"></dxi-series>
+      <dxo-common-series-settings
+              #commonSeries
+              argumentField="company"
+              type="splinearea"></dxo-common-series-settings>
+      <!--dxo-margin [bottom]="20"></dxo-margin-->
+      <dxo-argument-axis [valueMarginsEnabled]="true">
+        <dxo-grid [visible]="false"></dxo-grid>
+        <dxo-label [visible]="true"></dxo-label>
+      </dxo-argument-axis>
+      <dxo-export [enabled]="false"></dxo-export>
+      <dxo-legend [visible]="false"></dxo-legend>
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      <dxi-value-axis>
+        <dxo-grid color="#3C3F41"></dxo-grid>
+      </dxi-value-axis>
+    </dx-chart>
+  </div>
+</div>
+<br/>
+<div class ="row">
+  <div class="col-md-12">
+    <h3 style="text-align: center;">Jahresverbrauch</h3>
+    <dx-chart
+            id="chart1"
+            [dataSource]="verbrauch_daily"
+            style="height: 250px;">
+      <dxo-legend [visible]="false"></dxo-legend>
+      <dxi-series
+              argumentField="Label"
+              valueField="Value"
+              type="bar"
+              color="#ffaa66">
+      </dxi-series>
+      <dxo-tooltip
+              [enabled]="true">
+      </dxo-tooltip>
+    </dx-chart>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-dark" role="alert">
+      <h2 style="text-align: center;">Gesamt-Jahresverbrauch: 23kWh -> 253,59€</h2>
+    </div>
+
+  </div>
+</div>

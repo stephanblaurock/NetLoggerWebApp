@@ -1,0 +1,50 @@
+<div *ngIf="currentDevice">
+  <h3>{{currentDevice.caption}}</h3>
+  <div class="form">
+    <div class="dx-fieldset">
+      <div class="dx-field">
+        <div class="dx-field-label">Zeitpunkt</div>
+        <div class="dx-field-value">
+          <dx-date-box type="datetime" [(ngModel)]="manualValueTimeStamp"></dx-date-box>
+        </div>
+      </div>
+      <div class="dx-field">
+        <div class="dx-field-label">Wert</div>
+        <div class="dx-field-value">
+          <dx-number-box format="#.#" [(ngModel)]="manualValue"></dx-number-box>
+        </div>
+      </div>
+      <div class="dx-field">
+        <div class="dx-field-label">interpolieren</div>
+        <div class="dx-field-value">
+          <dx-check-box [(ngModel)]="manualValueInterpolate"></dx-check-box>
+        </div>
+      </div>
+      <div class="dx-field">
+        <div class="dx-field-value">
+          <button class="btn action-button" (click)="setManualValue()" style="position: relative; right: 0px;">speichern</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Historie</h4>
+  <table *ngIf="manualValueHistory" class="table" style="width: 100%">
+    <thead>
+    <tr>
+      <th>Zeitpunkt</th>
+      <th>Wert</th>
+      <th>interpolieren</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mv of manualValueHistory">
+        <td>{{getFormattedDateTime(mv.timestamp)}}</td>
+        <td>{{mv.value}}</td>
+        <td>{{mv.interpolate}}</td>
+        <td><button type="button" class="btn btn-danger btn-sm">löschen</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

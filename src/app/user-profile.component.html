@@ -1,0 +1,127 @@
+<div *ngIf="userProfile" class="row">
+  <div class="col-lg">
+    <div>
+      <h3>Benutzerdaten
+        <dx-button text="Benutzer abmelden" type="dark" (onClick)="logout()"></dx-button>
+      </h3>
+      <div class="dx-fieldset" style="width:500px;">
+        <div class="dx-field">
+          <div class="dx-field-label">Name</div>
+          <div class="dx-field-value">
+            <dx-text-box width="220px" [(ngModel)]="userProfile.Name"></dx-text-box>
+          </div>
+        </div>
+
+        <div class="dx-field">
+          <div class="dx-field-label">E-Mail</div>
+          <div class="dx-field-value">
+            <dx-text-box width="250px" [(ngModel)]="userProfile.EMail"></dx-text-box>
+          </div>
+        </div>
+
+        <div class="dx-field">
+          <div class="dx-field-label">Mobilfunknummer</div>
+          <div class="dx-field-value">
+            <dx-text-box width="200px" [(ngModel)]="userProfile.Mobil"></dx-text-box>
+          </div>
+        </div>
+
+        <div class="dx-field">
+          <div class="dx-field-label">Passwort</div>
+          <div class="dx-field-value">
+            <dx-text-box mode="password" width="150px" [(ngModel)]="userProfile.Password"></dx-text-box>
+          </div>
+        </div>
+      </div>
+
+      <h3>Benachrichtigungs-Einstellungen</h3>
+      <br/>
+      <dx-check-box text="tägliche Statusbenachrichtigung aller Sensorstatis aktivieren"
+                    [(ngModel)]="userProfile.UserNotification.DailyStatus"></dx-check-box>
+      <br/>
+      <dx-check-box style="padding-left: 25px; padding-top: 10px; padding-bottom: 5px;"
+                    text="nur zustellen, wenn Sensor-Fehler aufgetreten sind"
+                    [(ngModel)]="userProfile.UserNotification.DailyOnlyOnError"></dx-check-box>
+      <br/>
+      <dx-check-box style="padding-left: 25px; padding-right: 10px" text="per E-Mail zustellen"
+                    [(ngModel)]="userProfile.UserNotification.DailyWithEMail">&nbsp;&nbsp;
+      </dx-check-box>
+      <dx-button text="testen" type="normal" style="margin-bottom: 5px" (onClick)="sendStatusMail()"></dx-button>
+      <br/>
+      <div *ngIf="isAdmin">
+        <dx-check-box style="padding-left: 25px; padding-right: 10px" text="per Messenger zustellen"
+                      [(ngModel)]="userProfile.UserNotification.DailyWithMessenger"></dx-check-box>
+        <dx-button text="testen" type="normal" (onClick)="sendStatusMessage()"></dx-button>
+        <br/>
+      </div>
+      <br/>
+      <dx-check-box text="kontinuierlicher Fehlerbericht aktivieren"
+                    [(ngModel)]="userProfile.UserNotification.ErrorStatus"></dx-check-box>
+      <br/>
+      <dx-check-box style="padding-left: 25px; padding-top: 10px; padding-bottom: 5px; padding-right: 10px"
+                    text="per E-Mail zustellen"
+                    [(ngModel)]="userProfile.UserNotification.ErrorWithEMail"></dx-check-box>&nbsp;&nbsp;<dx-button
+      text="testen" type="normal" style="margin-bottom: 5px" (onClick)="sendErrorMail()"></dx-button>
+      <br/>
+      <div *ngIf="isAdmin">
+        <dx-check-box style="padding-left: 25px; padding-right: 10px" text="per Messenger zustellen"
+                      [(ngModel)]="userProfile.UserNotification.ErrorWithMessenger"></dx-check-box>&nbsp;&nbsp;<dx-button
+        text="testen" type="normal" (onClick)="sendErrorMessage()"></dx-button>
+        <br>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="col-lg">
+    <h3>tägliche Dashboard-Berichte</h3>
+    <dx-check-box text="tägliche Statusbenachrichtigung aller Sensorstatis aktivieren"
+                  [(ngModel)]="userProfile.UserNotification.DailyStatus"></dx-check-box>
+    <table>
+      <tr>
+        <td>verfügbare Berichte</td>
+        <td>zusätzliche E-Mail-Empfänger</td>
+      </tr>
+      <tr *ngFor="let dRepInfo of userProfile.UserNotification.DailyDashboardReports">
+        <td>
+          <dx-check-box text="{{dRepInfo.CustomerCaption}} - {{dRepInfo.DashboardCaption}}"
+                        [(ngModel)]="dRepInfo.IsSelected"></dx-check-box>
+        </td>
+        <td>
+          <dx-text-box [(ngModel)]="dRepInfo.MailAddresses"></dx-text-box>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+
+
+    <!--div class="col-md"-->
+    <h3>monatliche Dashboard-Berichte</h3>
+    <dx-check-box text="monatliche Berichte verschicken aktivieren"
+                  [(ngModel)]="userProfile.UserNotification.MonthlyStatus"></dx-check-box>
+    <table>
+      <tr>
+        <td>verfügbare Berichte</td>
+        <td>zusätzliche E-Mail-Empfänger</td>
+      </tr>
+      <tr *ngFor="let dRepInfo of userProfile.UserNotification.MonthlyDashboardReports">
+        <td>
+          <dx-check-box text="{{dRepInfo.CustomerCaption}} - {{dRepInfo.DashboardCaption}}"
+                        [(ngModel)]="dRepInfo.IsSelected"></dx-check-box>
+        </td>
+        <td>
+          <dx-text-box [(ngModel)]="dRepInfo.MailAddresses"></dx-text-box>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+  </div>
+  <!--/1--div-->
+</div>
+<div class="row">
+  <div class="col-md">
+    <dx-button text="speichern" type="success" (onClick)="saveProfile()"></dx-button>
+  </div>
+</div>
+

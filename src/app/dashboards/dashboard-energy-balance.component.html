@@ -1,0 +1,151 @@
+<div *ngIf="showChartLeistung" class="row">
+  <div class="col-md-9">
+    <h3 style="text-align: left;">Leistungsverlauf
+    <button type="button" class="btn btn-dark" (click)="sendReport()"><img
+      src="../../assets/buttimages/mail.png" style="height: 25px;"></button>
+    </h3>
+    <!--button *ngIf="isAdmin" type="button" class="btn" (click)="setCounterCorrections()">Zählerstände richten</button-->
+    <!--button *ngIf="isAdmin" type="button" class="btn" (click)="calculateSummen()">Summenberechnung</button-->
+    <div style="position: absolute; top: 0px; right: 0px;">
+      <button type="button" class="btn btn-dark" (click)="refreshChartLeistung()"><img
+        src="../../assets/buttimages/refresh_filled.png" style="height: 25px;"></button>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-dark" (click)="backwardLeistungClicked()"><img
+          src="../../assets/buttimages/back-filled.png" style="height: 25px;"></button>
+        <input [matDatepicker]="myDatepicker" style="width: 0px; border-width: 0px;"
+               (dateChange)="onCurrentDateLeistungChanged($event)">
+        <button type="button" class="btn btn-secondary" style="background-color: #4076A6" (click)="myDatepicker.open()">
+          {{getFormattedDate(currentDateLeistung)}}
+        </button>
+        <button type="button" class="btn btn-dark" (click)="forwardLeistungClicked()"><img
+          src="../../assets/buttimages/forward-filled.png" style="height: 25px;"></button>
+      </div>
+    </div>
+    <mat-datepicker #myDatepicker></mat-datepicker>
+    <dx-chart
+      #chart_day0
+      id="chart__day"
+      [dataSource]="chartData_Leistung"
+      style="height: {{commonChartHeight}}px;"
+      scrollingMode="all"
+      zoomingMode="all"
+      [valueAxis]="valueAxis_Day"
+      [series]="seriesOptions_Day">
+      <dxo-legend [visible]="true"></dxo-legend>
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      <dxo-loading-indicator [show]="true" text="Daten werden geladen..."></dxo-loading-indicator>
+    </dx-chart>
+  </div>
+  <div class="col-md-3">
+    <h3 style="text-align: center;">Energiefluss</h3>
+    <div style="text-align: center"><span class="badge" [style.background-color]="currentEnergieflussColor">{{currentEnergieflussLabel}}</span>
+      <span [style.color]="currentEnergieflussColor">{{currentVerbrauch | number: '1.1-1'}} kW</span></div>
+    <dx-circular-gauge
+      id="rectangleNeedle"
+      [value]="currentVerbrauch"
+      style="height: {{commonChartHeight}}px;">
+      <dxo-value-indicator
+        type="rectangleNeedle"
+        color="#86B0D5">
+      </dxo-value-indicator>
+      <dxo-geometry
+        [startAngle]="180"
+        [endAngle]="0">
+      </dxo-geometry>
+      <dxo-scale
+        [startValue]="chartConfig.verbrauch_minvalue"
+        [endValue]="chartConfig.verbrauch_maxvalue"
+        [tickInterval]="10">
+        <dxo-label customizeText="Momentanwert"></dxo-label>
+      </dxo-scale>
+      <dxo-range-container [palette]="verbrauch_palette" [width]="10">
+        <dxi-range [startValue]="chartConfig.verbrauch_minvalue" [endValue]="0"></dxi-range>
+        <dxi-range [startValue]="0" [endValue]="chartConfig.verbrauch_maxvalue"></dxi-range>
+      </dxo-range-container>
+    </dx-circular-gauge>
+  </div>
+</div>
+
+<br/>
+<div *ngIf="showChartArbeit" class="row">
+  <div class="col-md-9">
+    <h3 style="text-align: left;">Arbeit &nbsp;
+      <div class="btn-group" role="group" style="display: inline">
+        <button type="button" [ngClass]="classNameYearButton" (click)="yearClicked()">Jahr</button>
+        <button type="button" [ngClass]="classNameMonthButton" (click)="monthClicked()">Monat</button>
+      </div>
+
+    </h3>
+    <div style="position: absolute; top: 0px; right: 0px;">
+      <button type="button" class="btn btn-dark" (click)="refreshChartArbeit()"><img
+        src="../../assets/buttimages/refresh_filled.png" style="height: 25px;"></button>
+      <div class="btn-group" role="group" >
+        <button type="button" class="btn btn-dark" (click)="backwardArbeitClicked()"><img
+          src="../../assets/buttimages/back-filled.png" style="height: 25px;"></button>
+        <button type="button" class="btn btn-secondary" style="width: 150px; background-color: #4076A6">
+          {{currentArbeitZeitraum}}
+        </button>
+        <button type="button" class="btn btn-dark" (click)="forwardArbeitClicked()"><img
+          src="../../assets/buttimages/forward-filled.png" style="height: 25px;"></button>
+      </div>
+    </div>
+    <dx-chart
+      #chart_day1
+      id="chart_x_month"
+      [dataSource]="chartData_Arbeit"
+      style="height: {{commonChartHeight}}px;"
+      [valueAxis]="valueAxis_Year"
+      [series]="seriesOptions_Year">
+      <dxo-legend [visible]="true"></dxo-legend>
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      <dxo-loading-indicator [show]="true" text="Daten werden geladen..."></dxo-loading-indicator>
+    </dx-chart>
+  </div>
+  <div class="col-md-3">
+    <h3 style="text-align: center;">Gesamt</h3>
+    <div style="text-align: center"><span class="badge" style="background-color: #3473A9; font-size: small" >{{sum_value | number:'1.0-0'}} {{sum_value_unit}}</span>
+      </div>
+    <dx-chart
+      #chart_day2
+      id="cart___m_month"
+      [dataSource]="chartData_Sum"
+      style="height: {{commonChartHeight}}px;"
+      [valueAxis]="valueAxis_Year"
+      [series]="seriesOptions_Sum">
+      <dxo-legend [visible]="false"></dxo-legend>
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      <dxo-loading-indicator [show]="true" text="Daten werden geladen..."></dxo-loading-indicator>
+    </dx-chart>
+    <!--dx-pie-chart [dataSource]="pieChartData_Day" type="donut" [palette]="pieChartPalette_Day" style="height:250px;">
+      <dxi-series argumentField="caption" valueField="value2">
+        <dxo-label
+                [visible]="false"
+                format="fixedPoint"
+                [customizeText]="customizeLabel">
+
+        </dxo-label>
+      </dxi-series>
+      <dxi-series argumentField="caption" valueField="value1">
+        <dxo-label
+                [visible]="true"
+                format="fixedPoint"
+                [customizeText]="customizeLabel">
+          <dxo-connector
+                  [visible]="true"
+                  [width]="0.5"></dxo-connector>
+        </dxo-label>
+      </dxi-series>
+      <dxo-legend [visible]="false"></dxo-legend>
+      <dxo-tooltip
+              [enabled]="true"
+              [customizeTooltip]="customizeTooltip"></dxo-tooltip>
+    </dx-pie-chart-->
+  </div>
+</div>
+<br/>
+<!--div class="row">
+  <div class="col-md-12">
+    <h3>Jahresverbrauch: <span style="color: goldenrod">25.553 kWh</span> - Ersparnis durch PV-Anlage: <span style="color: goldenrod">12.300 kWh</span></h3>
+  </div>
+
+</div-->

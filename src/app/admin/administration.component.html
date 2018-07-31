@@ -1,0 +1,35 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Administration <span style="font-size: small">aktueller Kunde: {{currentCustomerCaption}} ({{currentCustomerID}})</span></h2>
+    <br/>
+    <dx-tabs [dataSource]="['Ereignisse','Messenger','Wartungen']" [selectedIndex]="0" (onItemClick)="onSelectedTabChanged($event)">
+
+    </dx-tabs>
+    <br/>
+    <router-outlet></router-outlet>
+    <!--dx-tab-panel
+      #tabPanel
+      [selectedIndex]="0"
+      [loop]="false"
+      [animationEnabled]="true"
+      [swipeEnabled]="false"
+      (onSelectionChanged)="onSelectedTabChanged()"
+
+    >
+
+      <dxi-item title="Messenger">
+        <div style="margin-left: 10px;">
+          <app-messenger></app-messenger>
+        </div>
+      </dxi-item>
+
+      <dxi-item title="Ereignisse">
+        <br/>
+        <div style="margin-left: 10px;">
+          <app-eventlog-plain-widget></app-eventlog-plain-widget>
+        </div>
+      </dxi-item>
+    </dx-tab-panel-->
+  </div>
+</div>

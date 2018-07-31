@@ -1,0 +1,63 @@
+<h3 class="section-headline">
+  <button type="button" class="btn btn-dark" (click)="goBack()" style="text-align: left;"><img
+    src="../../assets/buttimages/back-filled.png" style="height: 25px;"></button>
+  Konfiguration Dashboard "Energie-Zählerstände"
+</h3>
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-8">
+    <div class="form-group">
+      <label for="_caption">Bezeichnung</label>
+      <input type="email" class="form-control" id="_caption" aria-describedby="emailHelp"
+             placeholder="Namen eingeben" [(ngModel)]="dashboard.caption">
+
+      <!--small id="emailHelp" class="form-text text-muted">Beschriftung für das Dashboard.</small-->
+    </div>
+    <br/>
+    <h4>enhaltene Sensoren (Arbeit)</h4>
+    <div *ngIf="dashboard && dashboard.config && dashboard.config.devices">
+      <table>
+        <tbody>
+        <tr *ngFor="let device of dashboard.config.devices">
+          <td><img style="height:20px;" [src]="getUnitImageUrl(device.unit)"></td>
+          <td>&nbsp;{{device.caption_group}}</td>
+          <td>{{device.caption}} ({{device.unit}})</td>
+          <td>&nbsp;&nbsp;<button type="button" class="btn btn-dark btn-sm" (click)="removeSensor(device.id)">
+            entfernen
+          </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-dark" (click)="addSensor()">Sensor hinzufügen</button>
+    <br/><br/>
+    <!--
+    <h4>monatlichen Report (PDF) an folgende Adressen schicken:</h4>
+    <div class="form-group row" *ngFor="let adr of monthly_recipients; let i = index">
+
+      <div class="col-md-6">
+        <input type="email" class="form-control" [id]="'_caption'+i" aria-describedby="emailHelp"
+               placeholder="Adresse" [(ngModel)]="adr.caption">
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-dark btn-sm" (click)="removeRecipient(adr.caption)">entfernen</button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-dark" (click)="addRecipient()">neuer E-Mail-Empfänger</button>
+  -->
+  </div>
+</div>
+<br/>
+<button type="button" class="btn action-button" (click)="save()">speichern</button>
+<button type="button" class="btn btn-danger" (click)="delete()">löschen</button>
+
+<dx-popup class="popup" [width]="500" [height]="500" [showTitle]="true" title="Sensor hinzufügen" [dragEnabled]="false"
+          [closeOnOutsideClick]="false" [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div style="height: 350px; overflow: auto">
+      <app-device-picker #devPicker></app-device-picker>
+    </div>
+    <br/>
+    <button type="button" class="btn action-button" (click)="saveAndClosePopup()">übernehmen</button>
+  </div>
+</dx-popup>

@@ -1,0 +1,39 @@
+<div>
+  <h2>Wartungs-Center</h2>
+  <br>
+  <button type="button" class="btn btn-dark" (click)="setDebugging(true)" style="display:inline-block">Debug-Modus einschalten</button>
+  <button type="button" class="btn btn-dark" (click)="setDebugging(false)" style="display:inline-block">Debug-Modus ausschalten</button>
+  <br><br>
+  <button type="button" class="btn btn-dark" (click)="validateLastConnected()" style="display:inline-block">ValidateLastConnected ausführen</button>
+  <button type="button" class="btn btn-dark" (click)="updateSensorGroupsCurrentValue()" style="display:inline-block">UpdateSensorGroupsCurrentValue</button>
+  <dx-check-box text="für alle Kunden ausführen" [(ngModel)]="healthStatusForAllCustomers" style="display: inline-block;"></dx-check-box>
+  <br><br>
+  <button type="button" class="btn btn-dark" (click)="refreshHealthStatus()" style="display:inline-block">Health-Statis aktualisieren</button>
+  <button type="button" class="btn btn-dark" (click)="recalculateHealthStatus()" style="display:inline-block">Health-Statis komplett neu kalkulieren</button>
+  <dx-check-box text="für alle Kunden ausführen" [(ngModel)]="healthStatusForAllCustomers" style="display: inline-block;"></dx-check-box>
+  <br><br>
+  <button type="button" class="btn btn-dark" (click)="recalculateMonthValues()" style="display:inline-block">Monatssummen kalkulieren</button>
+  <button type="button" class="btn btn-dark" (click)="recalculateYearValues()" style="display:inline-block">Jahressummen kalkulieren</button>
+  <button type="button" class="btn btn-dark" (click)="recalculateAndValidateMonthValues()" style="display:inline-block">Monatssummen validieren und neu kalkulieren</button>
+  <button type="button" class="btn btn-dark" (click)="recalculateAndValidateYearValues()" style="display:inline-block">Jahressummen validieren und neu kalkulieren</button>
+  <br>
+  <input [matDatepicker]="myDatepicker" style="display:inline-block" (dateChange)="onCurrentDateLeistungChanged($event)" [(ngModel)]="currentDate">
+  <button type="button" class="btn btn-dark" (click)="myDatepicker.open()" style="display:inline-block">...</button>
+  <dx-check-box text="für alle Kunden ausführen" style="display:inline-block;" [(ngModel)]="healthStatusForAllCustomers"></dx-check-box><br>
+  <dx-text-box [(ngModel)]="currentDeviceID"></dx-text-box>
+  <button type="button" class="btn btn-dark" (click)="calculateDayValues()" style="display:inline-block">Tagessummen von obigem Tag bis heute neu kalkulieren</button>
+  <br><br>
+  <span>Mobilfunkrufnummer </span><dx-text-box [(ngModel)]="currentMobileNumber"></dx-text-box>
+  <span>EMail-Adresse </span><dx-text-box [(ngModel)]="currentMailAddress"></dx-text-box>
+  <span>UserID </span><dx-text-box [(ngModel)]="currentUserID"></dx-text-box>
+  <span>täglich- oder monatlich (0,1) </span><dx-text-box [(ngModel)]="currentStatusReportMode"></dx-text-box>
+  <button type="button" class="btn btn-dark" (click)="sendStatusNotification()" style="display:inline-block">Statusbenachrichtigung schicken</button>
+</div>
+<div>
+  <br/>
+  <h4>Rückgabewert:</h4>
+  <p>{{rueckgabe}}</p>
+</div>
+
+<mat-datepicker #myDatepicker></mat-datepicker>
+

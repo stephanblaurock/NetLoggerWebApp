@@ -1,0 +1,229 @@
+/*** Allgemein ***/
+body, p, span {
+  font-family: 'Roboto';
+  /*background-color: #1D2124;*/
+  /*background-color: black;*/
+    color: #aaaaaa;
+}
+
+h1, h2, h3, h4, h5, h6, .font-alt {
+  font-family: 'Roboto Condensed';
+  font-weight:300;
+  color: #BE392B;
+}
+
+main {
+  margin-top: 80px;
+}
+
+/* Hilfsklassen */
+
+.d-relative {
+	position: relative;
+}
+
+/*** Navbar ***/
+#home .logo {
+  height: 45px;
+  -webkit-filter: drop-shadow(1px 1px 1px #AAA);
+  filter: drop-shadow(1px 1px 1px #AAA);
+}
+.navbar .avatar {
+  height: 40px;
+  width: 40px;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+}
+.navbar-nav .badge {
+	position: absolute;
+	right: 0px;
+	bottom: 25px;
+	padding-right: .5em;
+	padding-left: .5em;
+}
+.card .badge-pill {
+	position: absolute;
+	right: 4px;
+	top: 6px;
+	padding-right: .5em;
+	padding-left: .5em;
+}
+
+/*** News-Posts ***/
+.postcontent {
+  padding-top: 0px;
+  padding-left: 90px;
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*** Gallerie-Cards ***/
+.card {
+  /*background-color: lightslategrey;*/
+}
+
+.card-img-top {
+  height: 150px;
+
+  object-fit: cover;
+}
+
+/*** RESPONSIVE-DESIGN ***/
+/*** schmale Darstellung ***/
+@media screen and (max-width: 900px) {
+  .postcontent {
+    padding-top: 80px;
+    padding-left: 0px;
+  }
+}
+
+/*** Darstellung Smartphone-Menu ***/
+/*
+@media screen and (max-width: 400px) {
+  .postcontent {
+    padding-top: 100px;
+    padding-left: 0px;
+  }
+}
+*/
+
+.action-button {
+  background-color: #4076A6;
+  color: #ffffff;
+  border-width: 0px;
+}
+
+.form-control {
+  background: #d8d8d8;
+}
+
+/* Navigationsmenu-Styles */
+.nav-menu {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  text-align: center;
+}
+.nav-menu li {
+  float: left;
+}
+.nav-menuitem a {
+  display: block;
+  height: 100%;
+  color: white;
+  padding-left: 11px;
+  padding-top: 0px;
+  margin-bottom: 4px;
+  /*height:60px;*/
+  text-decoration: none;
+  /*font-size: 1.3em;*/
+}
+.nav-menuitem a:hover {
+  color: #BF7472;
+}
+.nav-active a {
+  color: #C0392B;
+}
+/* ************************/
+.dx-tile {
+  background-color: transparent;
+  border-width: 0px;
+}
+.dx-item {
+  background-color: transparent;
+  border-width: 0px;
+}
+.dx-template-wrapper {
+  background-color: transparent;
+  border-width: 0px;
+}
+.dx-item-content {
+  background-color: transparent;
+  border-width: 0px;
+}
+.dx-tile-content {
+  background-color: transparent;
+  border-width: 0px;
+}
+.dx-state-hover {
+  background-color: transparent;
+  border-width: 0px;
+}
+
+.nl-tilelist {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 0px;
+  padding: 0px;
+  /*width:100%;*/
+}
+.nl-tileitem {
+  /*background-color: #06202D;*/
+  border-radius: 2px;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  color: seashell;
+  height:120px;
+  width:250px;
+  text-decoration: none;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  /*box-shadow: 3px 4px 4px 0 rgba(0, 0, 0, 0.2), 3px 3px 3px 0 rgba(0, 0, 0, 0.19);*/
+  /*border-radius: 4px;*/
+  vert-align: top;
+  position: relative;
+  border-width: 1px;
+  border-color: #4e4e4e;
+  border-style: solid;
+}
+.nl-tileitem-selected {
+   border-color: #F7AD51;
+   border-style: solid;
+   border-width: 2px;
+}
+
+.nl-span-selected {
+  border-radius: 2px;
+  border-color: #F7AD51;
+  border-style: solid;
+  border-width: 2px;
+}
+.nl-span-unselected {
+  border-radius: 2px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #666
+}
+
+.nl-tileitem-cd {
+  /*background-color: #06202D;*/
+  cursor: pointer;
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-color: white;
+  color: seashell;
+  height:120px;
+  width:250px;
+  text-decoration: none;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 0px 0 rgba(0, 0, 0, 0.2), 3px 3px 3px 0 rgba(0, 0, 0, 0.19);
+  /*border-radius: 4px;*/
+  vert-align: top;
+  position: relative;
+  /*border-width: 0px;
+  border-color: #11557A;
+  border-style: solid;*/
+}

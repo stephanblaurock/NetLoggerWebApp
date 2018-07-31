@@ -1,0 +1,80 @@
+<h3 class="section-headline">
+	<button type="button" class="btn btn-dark" (click)="goBack()" style="text-align: left;"><img
+			src="../../assets/buttimages/back-filled.png" style="height: 25px;"></button>
+	Konfiguration Dashboard "Energie-Bilanz"
+</h3>
+<div class="row" style="margin-top: 20px;">
+	<div class="col-md-6">
+		<div class="form-group">
+			<label for="_caption">Bezeichnung</label>
+			<input type="email" class="form-control" id="_caption" aria-describedby="emailHelp"
+			       placeholder="Namen eingeben" [(ngModel)]="dashboard.caption">
+			<!--small id="emailHelp" class="form-text text-muted">Beschriftung für das Dashboard.</small-->
+		</div>
+		<br/>
+		<h4>Sensoren für die Momentananzeige (Leistung)</h4>
+		<div *ngIf="dashboard && dashboard.config && dashboard.config.devices_leistung">
+      <table>
+        <tbody>
+        <tr *ngFor="let device of dashboard.config.devices_leistung; let i = index">
+          <td><img style="height:20px;" [src]="getUnitImageUrl(device.unit)"></td>
+          <td>{{device.caption_group}}</td>
+          <td>{{device.caption}} ({{device.unit}})</td>
+          <td><input type="number" class="form-control" [id]="'_energyType'+i.toString()" [(ngModel)]="device.energy_type"></td>
+          <td><button type="button" class="btn btn-dark btn-sm" (click)="removeSensor('leistung', device.id)">entfernen</button></td>
+        </tr>
+        </tbody>
+      </table>
+		<!--span *ngFor="let device of dashboard.config.devices_leistung"
+		      style="height: 35px;
+			      padding-left: 5px; padding-right: 5px; margin-top: 5px; margin-right: 5px;
+				  cursor: pointer">
+				<img style="height:20px;" [src]="getUnitImageUrl(device.unit)">
+				{{device.caption_group}}: {{device.caption}} ({{device.unit}})
+			<button type="button" class="btn btn-dark" (click)="removeSensor('leistung', device.id)">entfernen</button>
+			<br/>
+		</span-->
+		</div>
+		<button type="button" class="btn btn-dark" (click)="addSensor('leistung')">Sensor hinzufügen</button>
+		<br/><br/>
+		<h4>Sensoren für die Gesamtstatistik (Arbeit)</h4>
+		<div *ngIf="dashboard && dashboard.config && dashboard.config.devices_arbeit">
+      <table>
+        <tbody>
+        <tr *ngFor="let device of dashboard.config.devices_arbeit; let y = index">
+          <td><img style="height:20px;" [src]="getUnitImageUrl(device.unit)"></td>
+          <td>{{device.caption_group}}</td>
+          <td>{{device.caption}} ({{device.unit}})</td>
+          <td><input type="number" class="form-control" [id]="'_energyTypeArbeit'+y.toString()" [(ngModel)]="device.energy_type"></td>
+          <td><button type="button" class="btn btn-dark"  (click)="removeSensor('arbeit', device.id)">entfernen</button></td>
+        </tr>
+        </tbody>
+      </table>
+		<!--span *ngFor="let device of dashboard.config.devices_arbeit; let y = index"
+		      style="height: 35px;
+			      padding-left: 5px; padding-right: 5px; margin-top: 5px; margin-right: 5px;
+				  cursor: pointer">
+				<img style="height:20px;" [src]="getUnitImageUrl(device.unit)">
+				{{device.caption_group}}: {{device.caption}} ({{device.unit}})
+			<button type="button" class="btn btn-dark"  (click)="removeSensor('arbeit', device.id)">entfernen</button>
+			<br/>
+		</span-->
+		</div>
+		<button type="button" class="btn btn-dark" (click)="addSensor('arbeit')">Sensor hinzufügen</button>
+		<br/>
+	</div>
+</div>
+<br/>
+<button type="button" class="btn action-button" (click)="save()">speichern</button>
+<button type="button" class="btn btn-danger" (click)="delete()">löschen</button>
+
+<dx-popup class="popup" [width]="500" [height]="500" [showTitle]="true" title="Sensor hinzufügen" [dragEnabled]="false"
+          [closeOnOutsideClick]="false" [(visible)]="popupVisible">
+	<div *dxTemplate="let data of 'content'">
+		<div style="height: 350px; overflow: auto">
+			<app-device-picker #devPicker></app-device-picker>
+		</div>
+		<br/>
+		<button type="button" class="btn action-button" (click)="saveAndClosePopup()">übernehmen</button>
+	</div>
+</dx-popup>

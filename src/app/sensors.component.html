@@ -1,0 +1,132 @@
+<div *ngIf="showSensors" class="row">
+  <div class="col-md-12">
+    <ul class="nl-tilelist">
+      <li *ngFor="let deviceGroup of sensorDevices">
+        <a [routerLink]="[deviceGroup.device_group_id]">
+          <div class="nl-tileitem" [ngStyle]="getTileStyle(deviceGroup)"
+            [style.background-image]="'url(http://service.netlogger.eu/img/device_images/' + deviceGroup.image_file + ')'">
+            <div
+              style="height:25px; background-color: #000000; position:absolute; opacity: 0.9; bottom:0; width:100%; height:100%; vertical-align: bottom">
+
+            </div>
+            <div
+              style="position: absolute; bottom:5px; right:8px; z-index: 10; width:15px; height: 15px; border-radius: 7px;"
+              [style.background-color]="getHealthStatusColor(deviceGroup)">
+            </div>
+            <div style="position: absolute; bottom:7px; right:30px; z-index: 10; height: 20px;">
+              <img src="../assets/indicators/{{getConnectionImage(deviceGroup.is_connected)}}"
+                   style="width: 18px; height: 18px;">
+            </div>
+            <!--div [matMenuTriggerFor]="menu"
+                 style="position: absolute; bottom:7px; right:60px; z-index: 10; height: 20px;">
+              <img (click)="setCurrentDeviceGroup(deviceGroup)" src="../assets/buttimages/menu-vertical-filled.png"
+                   style="width: 18px; height: 18px;">
+            </div-->
+            <!--div style="position: absolute; top: 3px; right: 4px; z-index: 10; height: 35px;">
+              <img style="height:35px;" [src]="getDeviceImageUrl(deviceGroup.image_file)">
+            </div-->
+            <div style="height:25px; position:absolute; bottom:0; width:100%; height:100%; vertical-align: bottom">
+              <p
+                style="color: #aaaaaa; font-size:1.1em; line-height: 100%; text-shadow: 0px 0px black; margin-top: 4px; margin-left: 5px; margin-right: 15px;">
+                <b>{{deviceGroup.caption}}</b>
+              </p>
+            </div>
+            <div style="position: relative; top: 65%; transform: translateY(-65%); text-align: center;">
+              <span style="font-size: 2em; color: #4076A6; cursor: hand;">{{deviceGroup.current_value | number : getDecimalPlaces(deviceGroup)}} {{deviceGroup.unit}}</span>
+            </div>
+            <span style="color: #aaaaaa; font-size:13px; position: absolute; bottom: 3px; margin-left: 5px;">{{getFormattedDateTime(deviceGroup.last_connected)}}</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="isAdmin" class="row">
+  <div class="col-md-12">
+    <span dropdown>
+  <a href dropdownToggle (click)="false">
+    <img src="../assets/buttimages/plus-filled.png" style="height:40px">
+  </a>
+    <ul *dropdownMenu class="dropdown-menu" role="menu">
+      <li role="menuitem" *ngFor="let choice of dropdownCreateItems">
+        <a class="dropdown-item" style="cursor: hand;" (click)="createElement(choice.id)">{{choice.caption}}</a>
+      </li>
+    </ul>
+</span>
+  </div>
+</div>
+
+<!--mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="showProperties()">
+    <span>Eigenschaften</span>
+  </button>
+</mat-menu-->
+
+
+<!--div class="row">
+  <div class="col-md-12">
+    <img id="targetElement" src="../assets/buttimages/plus-filled.png" style="height:40px">
+    <dx-lookup
+      [dataSource]="dropdownCreateItems"
+      [popupHeight]="300"
+      [popupWidth]="300"
+      valueExpr="id" displayExpr="caption">
+      <dxo-position
+        my="left"
+        at="left"
+        of="#targetElement">
+      </dxo-position>
+    </dx-lookup>
+  </div>
+</div-->
+
+<dx-popup class="popup" [width]="500" [height]="400" [showTitle]="true" title="neue Meßspur ohne Sensor"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false" [(visible)]="popupCreateDeviceGroupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div style="height: 250px; overflow: auto">
+      <div class="form-group">
+        <label for="_caption1">Bezeichnung</label>
+        <input type="email" class="form-control" id="_caption1" aria-describedby="c1"
+               placeholder="Namen eingeben" [(ngModel)]="createDeviceGroupCaption">
+        <!--small id="emailHelp" class="form-text text-muted">Beschriftung für das Dashboard.</small-->
+      </div>
+      <br/>
+    </div>
+    <br/>
+    <button type="button" class="btn action-button" (click)="saveAndClosePopupCreateDevice()">speichern</button>
+  </div>
+</dx-popup>
+
+<dx-popup class="popup" [width]="500" [height]="500" [showTitle]="true" title="neue Sensorgruppe" [dragEnabled]="false"
+          [closeOnOutsideClick]="false" [(visible)]="popupCreateSensorGroupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div style="height: 350px; overflow: auto">
+      <div class="form">
+        <div class="dx-fieldset">
+          <div class="dx-field">
+            <div class="dx-field-label">Bezeichnung</div>
+            <div class="dx-field-value">
+              <dx-text-box [(ngModel)]="createSensorGroupCaption"></dx-text-box>
+            </div>
+          </div>
+          <div class="dx-field">
+            <div class="dx-field-label">Vorlage Sensortyp</div>
+            <div class="dx-field-value">
+              <dx-select-box
+                [dataSource]="sensorGroupTemplates"
+                displayExpr="caption"
+                valueExpr="sensor_group_id"
+
+                [(ngModel)]="selectedTemplate"
+              ></dx-select-box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <button type="button" class="btn action-button" (click)="saveAndClosePopupCreateSensorGroup()">speichern</button>
+  </div>
+</dx-popup>

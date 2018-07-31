@@ -1,0 +1,26 @@
+<div style="margin: auto; width: 350px;">
+
+<div style="margin-top: 150px; width: 350px;">
+  <!--<span class="glyphicon glyphicon-users"></span><h3>Bitte loggen Sie sich ein!</h3>-->
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="username">E-Mail-Adresse</label>
+      <input type="text" id="username" class="form-control" [ngModel]="username" name="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" class="form-control" [ngModel]="password" name="password">
+    </div>
+
+    <div *ngIf="false"  class="form-group">
+      <dx-check-box [ngModel]="autologin" name="autologin">auto</dx-check-box>
+      <span>automatisch anmelden</span>
+      <!--label [ngModel]="autologin" name="autologin">automatisch anmelden</labe-->
+      <!--input type="checkbox" id="autologin" class="form-control" [ngModel]="autologin" name="autologin"-->
+    </div>
+    <div>
+    <button type="submit" [disabled]="!f.valid" class="btn action-button" style="position: relative; right: 0px;">einloggen</button>
+    </div>
+  </form>
+</div>
+</div>

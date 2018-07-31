@@ -1,0 +1,15 @@
+	<div *ngFor="let deviceGroup of sensorDevices">
+		<h6><img style="height:20px;" [src]="getDeviceImageUrl(deviceGroup.image_file)"> <b>{{deviceGroup.caption}}</b>
+		</h6>
+		<div *ngIf="deviceGroup.devices" style="margin-left: 25px;">
+			<span *ngFor="let device of deviceGroup.devices"
+			      [ngClass]="device.selected ? 'nl-span-selected' : 'nl-span-unselected'"
+			      (click)="toggleSelected(device)"
+			      style="height: 30px;
+			      padding-left: 5px; padding-right: 5px; margin-right: 5px;
+				  cursor: pointer">
+				<img style="height:20px;" [src]="getUnitImageUrl(device.unit)">
+				{{device.caption}} ({{device.unit}})</span>
+		</div>
+		<br/>
+	</div>

@@ -1,0 +1,86 @@
+<div class="nl-widgetitem">
+  <div>
+    <h3 *ngIf="eventLogs">Ereignisprotokoll
+      <dx-select-box
+        style="display: inline-block;"
+        [dataSource]="eventTypes"
+        displayExpr="caption"
+        valueExpr="value"
+        (onItemClick)="setCurrentEventType($event)"
+        [(value)]="currentEventType"
+      ></dx-select-box>
+      <dx-select-box *ngIf="showCustomerDropDown"
+        style="display: inline-block;"
+        [dataSource]="customers"
+        displayExpr="caption"
+        valueExpr="cust_id"
+        (onItemClick)="setCurrentCustomer($event)"
+        [(value)]="currentCustomerID"
+      ></dx-select-box>
+      <!--dx-check-box text="nur aktuellen Kunden anzeigen ({{currentCustomerCaption}})" [(ngModel)]="showOnlyCurrentCustomer"></dx-check-box-->
+    </h3>
+    <div *ngFor="let item of eventLogs">
+      <div *ngIf="!useExternalEventLogFilter || isAdmin" style="width: 100%; background-color: #4e4e4e">
+        <h5><img [src]="getImageUrl(item.cust_id)" style="height: 30px;">&nbsp;&nbsp;{{item.cust_caption}}&nbsp;&nbsp;
+          <button *ngIf="currentEventType >= 2" type="button" class="btn btn-success btn-sm" style="margin-bottom: 3px; margin-top: 3px;" (click)="allAck(item.cust_id)">alle Fehler quittieren</button>
+          <button type="button" class="btn btn-danger btn-sm" style="margin-bottom: 3px; margin-top: 3px;" (click)="allDelete(item.cust_id)">alle löschen</button>
+          <button *ngIf="isAdmin" type="button" class="btn btn-danger btn-sm" style="margin-bottom: 3px; margin-top: 3px;" (click)="allDeleteComplete(item.cust_id)">alle löschen (aktueller EventType)</button>
+          <button type="button" class="btn btn-dark btn-sm" style="margin-bottom: 3px; margin-top: 3px;" (click)="reloadCustomer(item.cust_id)">aktualisieren</button>
+        </h5>
+      </div>
+
+      <table class="table table-hover borderless" style="width:100%">
+        <thead style="font-size: small">
+        <td style="width:40px; border-top: none;">Status</td>
+        <td style="border-top: none;">Zeitstempel</td>
+        <td style="border-top: none;">Art</td>
+        <td style="border-top: none;">Gerät</td>
+        <td style="border-top: none;">Code</td>
+        <td style="border-top: none;">Statustext</td>
+        <td style="width:50px; border-top: none;"></td>
+        <td style="width:50px; border-top: none;"></td>
+        </thead>
+        <tr *ngFor="let subitem of item.event_logs">
+          <td style="border-top: none;"><span [ngClass]="getEventTypeClassName(subitem.et)" style="margin-right: 5px;">{{getEventTypeCaption(subitem.et)}}</span>
+          </td>
+          <td style="border-top: none;">{{getDateString(subitem.ts)}}</td>
+          <td style="border-top: none;">{{getSourceTypeCaption(subitem.est)}}</td>
+          <td style="border-top: none;">{{subitem.esc}}</td>
+          <td style="border-top: none;">{{subitem.ec}}</td>
+          <td style="border-top: none;"><a href="javascript:void(0);" (click)="evClick(item.cust_id, subitem.id)">{{subitem.ecc}}</a></td>
+          <td style="border-top: none;">
+            <button *ngIf="subitem.et >= 2 && subitem.ack === false" type="button" class="btn btn-success btn-sm" (click)="setAck(item.cust_id, subitem)">quittieren</button>
+            <img *ngIf="subitem.ack === true" src="/assets/navicons/ok.png" style="height:20px">
+          </td>
+          <td style="border-top: none;">
+            <button type="button" class="btn btn-dark btn-sm" (click)="deleteEventLog(item.cust_id, subitem)">löschen</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<dx-popup *ngIf="currentEventLog"
+  [width]="'80%'"
+  [height]="'60%'"
+  [showTitle]="true"
+  title="Ereignis: {{currentEventLog.event_code_caption}} ({{currentEventLog.event_code}})"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <dx-scroll-view id="scrollview">
+      <span [ngClass]="getEventTypeClassName(currentEventLog.event_type)" style="margin-right: 5px; font-size: large">{{getEventTypeCaption(currentEventLog.event_type)}}</span>
+      <span style=" font-size: large">{{getDateString(currentEventLog.time_stamp)}}</span>
+      <span style=" font-size: large"> - {{getSourceTypeCaption(currentEventLog.event_source_type)}}</span><br/>
+      <span style="font-weight: bold;  font-size: large">{{currentEventLog.event_code_caption}}</span><br/>
+      <div *ngIf="currentEventLog.event_type >= 2 && currentEventLog.ack">
+        <span style="color: green;  font-size: large">Dieses Fehlerereignis wurde am {{getDateString(currentEventLog.ack_timestamp)}} von {{currentEventLog.ack_user}} quittiert.</span>
+      </div>
+      <hr>
+      <div  [innerHTML]="getDescriptionAsHtml()"></div>
+    </dx-scroll-view>
+  </div>
+</dx-popup>

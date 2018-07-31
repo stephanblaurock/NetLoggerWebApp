@@ -1,0 +1,37 @@
+<div>
+  <br/>
+  <table>
+    <tr>
+      <td style="padding-right: 7px;">
+        <dx-button text="Telegram-Code anfordern" type="normal" (onClick)="makeAuthRequest()"></dx-button>
+      </td>
+      <td style="padding-right: 7px;">
+        <dx-text-box width="200px" [(ngModel)]="telegramCode"></dx-text-box>
+      </td>
+      <td style="padding-right: 7px;">
+        <dx-button text="Code bestätigen" type="normal" (onClick)="makeAuth()"></dx-button>
+      </td>
+      <td>
+        <dx-button text="Reconnect ausführen" type="normal" (onClick)="reconnect()"></dx-button>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+  <h3>Nachricht senden</h3>
+
+    <div class="dx-field" style="width:300px">
+      <div class="dx-field-label">Mobilnummer</div>
+      <div class="dx-field-value">
+        <dx-text-box width="200px" [(ngModel)]="number"></dx-text-box>
+      </div>
+    </div>
+
+  <br/>
+  <dx-text-area width="600px" [(ngModel)]="message"></dx-text-area>
+  <dx-button text="senden" type="success" style="margin-top: 5px; margin-bottom: 10px;" (onClick)="sendMessage()"></dx-button>
+  <br/>
+  <br/>
+  <h4>Rückgabewert:</h4>
+  <p>{{rueckgabe}}</p>
+</div>

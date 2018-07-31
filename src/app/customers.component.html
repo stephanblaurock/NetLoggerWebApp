@@ -1,0 +1,43 @@
+<div *ngIf="customers" class="row">
+  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 pl-2 pr-2" *ngFor="let cust of customers">
+  <div class="card mb-4 bg-dark d-relative" >
+    <div class="card-header" [ngClass]="getHealthStatusColorClass(cust.health_status)" style="height: 3px">
+    </div>
+      <span class="badge-pill" [ngClass]="getHealthStatusBadgeColorClass(cust.health_status)" >{{getHealthStatusShortText(cust.health_status)}}</span>
+    <a [routerLink]="['/customers', cust.cust_id, 'dashboards']">
+      <img class="card-img-top img-fluid" [src]="'http://service.netlogger.eu/img/cust_images/' + cust.cust_id + '.jpg'"
+        alt="Kunde">
+      <div class="card-block text-center pt-3">
+        <h5 class="card-title text-light">{{cust.caption}}</h5>
+      </div>
+    </a>
+  </div>
+</div>
+</div>
+
+
+<div *ngIf="customers" class="row">
+  <div class="col-md-12">
+    <ul class="nl-tilelist">
+      <li *ngFor="let cust of customers">
+        <a [routerLink]="['/customers', cust.cust_id, 'dashboards']">
+          <div class="nl-tileitem" style="width:300px; height:200px; border-radius: 7px; font-size:16px"
+               [style.background-image]="'url(http://service.netlogger.eu/img/cust_images/' + cust.cust_id + '.jpg)'">
+            <!--div
+              style="height:25px; background-color: #000000; position:absolute; opacity: 0.6; bottom:0; width:100%; height:100%; vertical-align: bottom">
+
+            </div-->
+            <div style="height:25px; background-color: #2B2B2B; position:absolute; opacity: 0.6; top:0; width:100%; height:100%">
+              <p style="color: white; font-size:2em;text-shadow: 2px 2px black; margin-left: 5px; margin-right: 15px;"><b>{{cust.caption}}</b>
+              </p>
+            </div>
+            <div style="position: absolute; top:5px; right:8px; z-index: 10; width:15px; height: 15px; border-radius: 7px;"
+                 [style.background-color]="getHealthStatusColor(cust.health_status)">
+
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

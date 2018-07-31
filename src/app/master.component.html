@@ -1,0 +1,65 @@
+<header *ngIf="isAuthenticated">
+  <!-- Start Navigation -->
+  <nav  class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-0">
+    <div class="container">
+      <a class="navbar-brand font-alt" id="home" routerLink="/">
+        <img class="mr-2 mb-1 logo" src="../assets/netlogger_big_trans_white.png" alt="netLogger">
+      </a>
+      <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbar-toggle" aria-controls="navbar-toggle">
+        <span class="icon-menu" style="background-color: transparent"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end text-uppercase " id="navbar-toggle" [ngbCollapse]="isCollapsed">
+        <ul class="navbar-nav" (click)="navLinkClicked()">
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="news">Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="orders">Dashboards</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="forms">Sensoren</a>
+          </li>
+          <li class="nav-item d-relative" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="/failurelist"><span>Ereignisse </span><span class="badge-pill" [ngClass]="healthStatusColorClass" >{{healthStatusShortText}}</span></a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="/userprofile">Profil</a>
+          </li>
+          <li *ngIf="isAdmin && isAuthenticated"  class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" routerLink="/admin/events">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="" (click)="onLogout()"><span class="icon-logout"><span *ngIf="!isCollapsed"> Logout</span></span></a>
+          </li>
+
+        </ul>
+        <!-- navbar-nav -->
+      </div>
+      <!-- navbar-collapse -->
+    </div>
+    <!-- container -->
+  </nav>
+  <!-- nav -->
+  <!-- Ende Navigation -->
+</header>
+
+<!--header>
+  <table style="width: 100%; background-color: #000000;">
+    <tr>
+      <td></td>
+      <td *ngIf="isAdmin && isAuthenticated" style="width: 30px;"><a [routerLink]="['/admin','events']" style="cursor: pointer"><img src="../assets/navicons/gear.png" style="height: 35px;"></a></td>
+      <td style="width: 30px;"><a [routerLink]="['/userprofile']" *ngIf="isAuthenticated" style="cursor: pointer"><img src="../assets/navicons/user.png" style="height: 40px;"></a></td>
+      <td style="width: 30px;"><a [routerLink]="['/failurelist']" style="text-decoration: none;"><img [src]="healthStatusImage" style="height: 40px;"></a></td>
+      <td style="padding-top: 8px; padding-left: 20px;" width="150px"><a routerLink="/"><img src="../assets/netlogger_big_trans_white.png"  style="height:50px; display: inline;"></a></td>
+    </tr>
+
+  </table>
+</header-->
+
+<main> <!--style="padding-top: 70px; padding-left: 8px; padding-right: 8px;"-->
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
+
+</main>

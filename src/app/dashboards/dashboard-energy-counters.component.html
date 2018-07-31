@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3 style="text-align: left;">Summen Energieverbrauch
+      <button type="button" class="btn btn-dark" (click)="sendReport()"><img
+        src="../../assets/buttimages/mail.png" style="height: 21px;"></button>
+      <div class="btn-group" role="group" style="display: inline">
+        <button type="button" [ngClass]="classNameYearButton" (click)="yearClicked()">Jahr</button>
+        <button type="button" [ngClass]="classNameMonthButton" (click)="monthClicked()">Monat</button>
+      </div>
+    </h3>
+    <br/>
+    <div class="btn-group" role="group" style="position: absolute; top: 0px; right: 0px;">
+      <button type="button" class="btn btn-dark" (click)="backwardClicked()"><img
+        src="../../assets/buttimages/back-filled.png" style="height: 25px;"></button>
+      <button type="button" class="btn btn-secondary" style="width: 150px; background-color: #4076A6">
+        {{currentArbeitZeitraum}}
+      </button>
+      <button type="button" class="btn btn-dark" (click)="forwardClicked()"><img
+        src="../../assets/buttimages/forward-filled.png" style="height: 25px;"></button>
+    </div>
+    <!--dx-chart
+      #chart_day1
+      id="chart_x_month"
+      [dataSource]="chartData_Arbeit"
+      style="height: {{commonChartHeight}}px;"
+      [valueAxis]="valueAxis_Arbeit"
+      [series]="seriesOptions_Arbeit"
+      [rotated]="true"
+      [argumentAxis]="{label: {overlappingBehavior: 'rotate'}}"
+    >
+      <dxo-legend [visible]="false"></dxo-legend>
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      <dxo-loading-indicator [show]="true" text="Daten werden geladen..."></dxo-loading-indicator>
+    </dx-chart-->
+    <br/>
+  </div>
+</div>
+<!--div class="col-md-3">
+<dx-pie-chart [dataSource]="pieChartData" type="donut" [palette]="pieChartPalette" style="height:250px;">
+  <dxi-series argumentField="caption" valueField="value2">
+    <dxo-label
+            [visible]="false"
+            format="fixedPoint"
+            [customizeText]="customizeLabel">
+
+    </dxo-label>
+  </dxi-series>
+  <dxi-series argumentField="caption" valueField="value1">
+    <dxo-label
+            [visible]="true"
+            format="fixedPoint"
+            [customizeText]="customizeLabel">
+      <dxo-connector
+              [visible]="true"
+              [width]="0.5"></dxo-connector>
+    </dxo-label>
+  </dxi-series>
+  <dxo-legend [visible]="false"></dxo-legend>
+  <dxo-tooltip
+          [enabled]="true"
+         ></dxo-tooltip>
+</dx-pie-chart>
+</div-->
+
+<div class="row">
+  <table class="table table-hover borderless">
+    <thead>
+    <tr>
+      <th style="border-top: none;">Bezeichnung</th>
+      <th style="text-align: right; border-top: none;">Zählerstand Anfang</th>
+      <th style="border-top: none;">ausgelesen</th>
+      <th style="text-align: right; border-top: none;">Zählerstand Ende</th>
+      <th style="border-top: none;">ausgelesen</th>
+      <th style="text-align: right; border-top: none;">Gesamtverbrauch</th>
+      <th style="text-align: center; border-top: none;"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of verbrauch_table">
+      <td style="border-top: none;">{{item.group_caption}} - {{item.caption}}</td>
+      <td style="text-align: right; border-top: none;"><span [ngStyle]="getValueStyle(item.first_value_warning)">{{item.start_value | number: '1.1-1'}} {{item.unit}}</span></td>
+      <td style="border-top: none;"><span [ngStyle]="getValueStyle(item.first_value_warning)">{{getFormattedDate(item.time_first_value)}}</span></td>
+      <td style="text-align: right; border-top: none;"><span [ngStyle]="getValueStyle(item.last_value_warning)">{{item.end_value | number: '1.1-1'}} {{item.unit}}</span></td>
+      <td style="border-top: none;"><span [ngStyle]="getValueStyle(item.last_value_warning)">{{getFormattedDate(item.time_last_value)}}</span></td>
+      <td style="text-align: right; border-top: none;">
+        <div style="position: relative;">
+          <span>{{item.sum_value | number: '1.1-1'}} {{item.unit}}</span>
+          <div
+            [ngStyle]="getCounterBarWidthStyle(item.sum_value)"
+            style="position: absolute; z-index: -1; top:0px; right:0px; background-color: #316EA0; color: #316EA0">
+            .
+          </div>
+
+        </div>
+      </td>
+      <td style="text-align: center; border-top: none; width: 30px;">
+        <button class="btn-sm btn-dark" (click)="navigateToDevice(item.device_group_id)">Details...</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

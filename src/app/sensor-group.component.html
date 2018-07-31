@@ -1,0 +1,337 @@
+<h3 *ngIf="deviceGroup" class="section-headline">
+  <button type="button" class="btn btn-dark" (click)="goBack()" style="text-align: left;"><img
+    src="../assets/buttimages/back-filled.png" style="height: 25px;"></button>
+  Sensor [{{deviceGroup.caption}}]
+  <button *ngIf="allowEdit" type="button" class="btn btn-dark" (click)="editDeviceGroup()" style="text-align: left;"><img
+    src="../assets/buttimages/pencil.png" style="height: 25px;"></button>
+</h3>
+<div class="row">
+  <div class="col-md-12" *ngIf="deviceGroup && deviceGroup.devices">
+    <ul class="nl-tilelist">
+      <li *ngFor="let device of deviceGroup.devices">
+        <!--a (click)="setCurrentDevice(device)"-->
+        <div (click)="setCurrentDevice(device)" class="nl-tileitem" [ngClass]="getSelectedClassName(device.device_id)" [ngStyle]="getTileStyle(device)">
+          <!--[style.background-image]="'url(http://localhost:8992/img/device_images/' + deviceGroup.image_file + ')'">-->
+          <div
+            style="height:25px; background-color: #000000; position:absolute; opacity: 0.9; bottom:0; width:100%; height:100%; vertical-align: bottom">
+
+          </div>
+          <!--div
+            style="position: absolute; bottom:5px; right:8px; z-index: 10; width:15px; height: 15px; border-radius: 7px;"
+            [style.background-color]="getHealthStatusColor(device.health_status)">
+          </div-->
+          <div style="position: absolute; bottom:7px; right:8px; z-index: 10; height: 20px;">
+            <img src="../assets/indicators/{{getConnectionImage(device.sensor_id)}}"
+                 style="width: 18px; height: 18px;">
+          </div>
+          <div [matMenuTriggerFor]="menu"
+               style="position: absolute; bottom:7px; right:30px; z-index: 10; height: 20px;">
+            <img src="../assets/buttimages/menu-vertical-filled.png"
+                 style="width: 18px; height: 18px;">
+          </div>
+
+          <!--button class="btn btn-dark" [matMenuTriggerFor]="menu" style="position: absolute; bottom: 7px; right: 29px; height: 20px; z-index: 100;">
+            <img src="../assets/buttimages/menu-vertical-filled.png"
+                 style="width: 18px; height: 18px;">
+          </button-->
+
+
+          <div style="position: absolute; top: 3px; right: 4px; z-index: 10; height: 35px;">
+            <img style="height:35px;" [src]="getDeviceImageUrl(device.unit)">
+          </div>
+          <div style="height:25px; position:absolute; bottom:0; width:100%; height:100%; vertical-align: bottom">
+            <p
+              style="color: #aaaaaa; font-size:1.3em; line-height: 100%; text-shadow: 0px 0px black; margin-top: 4px; margin-left: 5px; margin-right: 40px;">
+              <b>{{device.caption}}</b>
+            </p>
+          </div>
+          <div style="position: relative; top: 65%; transform: translateY(-65%); text-align: center;">
+            <span style="font-size: 2em; color: #4076A6; cursor: hand;">{{device.sensor_current_value | number : getDecimalPlaces(device.sensor_current_value)}} {{device.unit}}</span>
+          </div>
+          <span style="color: #aaaaaa; font-size:13px; position: absolute; bottom: 3px; margin-left: 5px;">{{getFormattedDateTime(device.sensor_current_value_time_stamp)}}</span>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+</div>
+<!--div style="height: 5px; border-bottom-style: solid; border-width: 1px; border-color: #666"></div-->
+<br/>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="showManualValuePopup()">
+    <span>manuellen Wert einpflegen</span>
+  </button>
+  <button mat-menu-item (click)="showDeleteDevicePopup()">
+    <span>Meßspur löschen</span>
+  </button>
+  <button mat-menu-item (click)="showCopyDeviceDataPopup()">
+    <span>Meßspurdaten kopieren</span>
+  </button>
+  <button mat-menu-item (click)="showCounterCorrectionPopup()">
+    <span>Zählerkorrektur...</span>
+  </button>
+  <!--button mat-menu-item (click)="calculateSummen()">
+    <span>Summenberechnung</span>
+  </button-->
+  <button mat-menu-item (click)="popupCalculateDayValuesVisible = true;">
+    <span>Tagessummen neu kalkulieren...</span>
+  </button>
+</mat-menu>
+
+<dx-tab-panel
+  #tabPanel
+  [selectedIndex]="0"
+  [loop]="false"
+  [animationEnabled]="true"
+  [swipeEnabled]="false"
+>
+
+  <dxi-item title="Diagramm">
+    <div style="margin-left: 10px;">
+      <app-dashboard-energy-balance style="padding-left: 10px" [isEmbedded]="true" [cust_id]="customerIDFromURL"
+                                    [chartConfig]="chartConfig"></app-dashboard-energy-balance>
+    </div>
+  </dxi-item>
+
+  <dxi-item title="Ereignisse">
+    <br/>
+    <div style="margin-left: 10px;">
+      <app-eventlog-plain-widget [showCustomerDropDown]="false" [useExternalEventLogFilter]="true" [eventLogFilter]="eventLogFilter"></app-eventlog-plain-widget>
+    </div>
+  </dxi-item>
+</dx-tab-panel>
+
+<!--div style="width:500px">
+  <app-manage-manual-values [custID]="customerIDFromURL" [currentDevice]="currentDevice"></app-manage-manual-values>
+</div-->
+
+<dx-popup
+  class="popup"
+  [width]="400"
+  [height]="400"
+  [showTitle]="true"
+  title="Meßspur löschen"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupDeleteDeviceVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class="dx-fieldset">
+      <div class="dx-field">
+        <div class="dx-field-label">von Tag</div>
+        <div class="dx-field-value">
+          <dx-date-box type="date" [(ngModel)]="deleteFromDay"></dx-date-box>
+        </div>
+      </div>
+      <div class="dx-field">
+        <div class="dx-field-label">bis Tag</div>
+        <div class="dx-field-value">
+          <dx-date-box type="date" [(ngModel)]="deleteToDay"></dx-date-box>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-danger" (click)="deleteDeviceByTimeSpan()">angegebenen Zeitraum löschen</button>
+    <br>
+    Sie können auch die kompletten Meßspur löschen.<br>
+    Möchten Sie wirklich die Meßspur <span style="color: #4076A6">'<b>{{currentDevice.caption}}</b>'</span> löschen?
+    Damit werden auch alle aufgezeichneten Meßdaten unwiederbringlich gelöscht!
+    <br/>
+    <br/>
+    <button class="btn btn-danger" (click)="deleteDevice()">ja, ich möchte alle Meßspurdaten löschen!</button>
+  </div>
+</dx-popup>
+
+<dx-popup
+  class="popup"
+  [width]="400"
+  [height]="350"
+  [showTitle]="true"
+  title="Zählerkorrektur"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupCounterCorrectionVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class="form">
+      <div class="dx-fieldset">
+        <div class="dx-field">
+          <div class="dx-field-label">Zählerstand</div>
+          <div class="dx-field-value">
+            <span>{{currentDevice.sensor_current_value}} {{currentDevice.unit}}</span>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Korrekturdatum</div>
+          <div class="dx-field-value">
+            <dx-date-box type="datetime" [(ngModel)]="counterCorrectionTimeStamp"></dx-date-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Korrekturwert (relativ)</div>
+          <div class="dx-field-value">
+            <dx-number-box format="#.#" [(ngModel)]="counterCorrectionValue"></dx-number-box>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <button class="btn action-button" (click)="setCounterCorrection()">Korrektur durchführen</button>
+  </div>
+</dx-popup>
+
+<dx-popup
+  class="popup"
+  [width]="400"
+  [height]="350"
+  [showTitle]="true"
+  title="manuellen Meßwert hinzufügen"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupManualValueVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class="form">
+      <div class="dx-fieldset">
+        <div class="dx-field">
+          <div class="dx-field-label">letzter Wert</div>
+          <div class="dx-field-value">
+            <span>{{currentDevice.sensor_current_value}} {{currentDevice.unit}}</span>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Zeitpunkt</div>
+          <div class="dx-field-value">
+            <dx-date-box type="datetime" [(ngModel)]="manualValueTimeStamp"></dx-date-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Wert</div>
+          <div class="dx-field-value">
+            <dx-number-box format="#.#" [(ngModel)]="manualValue"></dx-number-box>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <button class="btn action-button" (click)="setSensorData()">speichern</button>
+  </div>
+</dx-popup>
+
+<dx-popup
+  class="popup"
+  [width]="450"
+  [height]="350"
+  [showTitle]="true"
+  title="Meßspurdaten kopieren"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupCopyDeviceVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class="form">
+      <div class="dx-fieldset">
+        <div class="dx-field">
+          <div class="dx-field-label">von</div>
+          <div class="dx-field-value">
+            <dx-date-box type="datetime" [(ngModel)]="copySensorDataDate1"></dx-date-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">bis</div>
+          <div class="dx-field-value">
+            <dx-date-box type="datetime" [(ngModel)]="copySensorDataDate2"></dx-date-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Ziel-Meßspur</div>
+          <div class="dx-field-value">
+            <span *ngIf="selectedTargetDeviceForDataCopy">{{selectedTargetDeviceForDataCopy.caption_group}} / {{selectedTargetDeviceForDataCopy.caption}}</span>
+            <button type="button" class="btn btn-dark" (click)="showDevicePickerPopup()" style="text-align: left;"><img
+              src="../assets/buttimages/menu-vertical-filled.png" style="height: 20px;"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <button class="btn action-button" (click)="copyDeviceData()">kopieren</button>
+  </div>
+</dx-popup>
+
+<dx-popup class="popup" [width]="500" [height]="500" [showTitle]="true" title="Sensor wählen" [dragEnabled]="false"
+          [closeOnOutsideClick]="false" [(visible)]="popupDevicePickerVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div style="height: 350px; overflow: auto">
+      <app-device-picker #devPicker></app-device-picker>
+    </div>
+    <br/>
+    <button type="button" class="btn action-button" (click)="selectDeviceOnPopup()">übernehmen</button>
+  </div>
+</dx-popup>
+
+<dx-popup
+  class="popup"
+  [width]="400"
+  [height]="350"
+  [showTitle]="true"
+  title="Eigenschaften"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupPropertiesVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class="form">
+      <div class="dx-fieldset">
+        <div class="dx-field">
+          <div class="dx-field-label">Bezeichnung</div>
+          <div class="dx-field-value">
+            <dx-text-box [(ngModel)]="changedDeviceGroupCaption"></dx-text-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Geräte-Adresse</div>
+          <div class="dx-field-value">
+            <dx-text-box [(ngModel)]="changedDeviceGroupAddress"></dx-text-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">Sensor aktivieren?</div>
+          <div class="dx-field-value">
+            <dx-check-box text="" [(ngModel)]="changedDeviceGroupIsActive"></dx-check-box>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <button class="btn action-button" (click)="saveChangedDeviceGroupProperties()">speichern</button>
+  </div>
+</dx-popup>
+
+<dx-popup
+  class="popup"
+  [width]="450"
+  [height]="350"
+  [showTitle]="true"
+  title="Tagesdaten kalkulieren"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="popupCalculateDayValuesVisible">
+  <div *dxTemplate="let data of 'content'">
+    <div class="form">
+      <div class="dx-fieldset">
+        <div class="dx-field">
+          <div class="dx-field-label">von</div>
+          <div class="dx-field-value">
+            <dx-date-box type="date" [(ngModel)]="calculateDayValuesDate1"></dx-date-box>
+          </div>
+        </div>
+        <div class="dx-field">
+          <div class="dx-field-label">bis</div>
+          <div class="dx-field-value">
+            <dx-date-box type="date" [(ngModel)]="calculateDayValuesDate2"></dx-date-box>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <button class="btn action-button" (click)="calculateDayValues()">berechnen</button>
+  </div>
+</dx-popup>

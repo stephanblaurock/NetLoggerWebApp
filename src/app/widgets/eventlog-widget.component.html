@@ -1,0 +1,74 @@
+<div class="nl-widgetitem">
+  <div>
+    <h3 style="margin-left: 15px;">Ereignisprotokoll</h3>
+
+  </div>
+
+  <!--div style="position: absolute; top:15px; right:30px;">
+    <button type="button" class="btn" (click)="deleteAllEventLogs()">alle Ereignisse löschen</button>
+    <div *ngIf="this.currentEventType" class="btn-group" dropdown>
+      <button dropdownToggle id="single-button" type="button" class="btn btn-default" >
+        {{currentEventType.caption}} <span class="caret"></span>
+      </button>
+      <ul dropdownMenu role="menu" aria-labelledby="single-button" class="dropdown-menu-right">
+        <li *ngFor="let eventType of eventTypes" role="menuitem" style="cursor: pointer;"><a class="dropdown-item" (click)="setCurrentEventType(eventType)">{{eventType.caption}}</a></li>
+      </ul>
+    </div>
+
+  </div-->
+
+  <dx-data-grid id="gridContainer" style="margin-left: 15px; margin-right: 15px;" #grid
+                [dataSource]="eventLogs"
+                [showColumnLines]="false"
+                [showRowLines]="false"
+                [showBorders]="false"
+                [rowAlternationEnabled]="true"
+                [columnAutoWidth]="true">
+
+    <dxi-column dataField="time_stamp" caption="Zeitstempel" cellTemplate="evDateCellTemplate"></dxi-column>
+    <dxi-column dataField="event_type" caption="Typ" cellTemplate="evTypCellTemplate"></dxi-column>
+    <dxi-column dataField="event_source_type" caption="Quelle"></dxi-column>
+    <dxi-column dataField="event_source" caption="Name"></dxi-column>
+    <dxi-column dataField="event_code_caption" caption="Status"></dxi-column>
+    <dxi-column dataField="description" caption="Beschreibung" width="70%"></dxi-column>
+    <dxi-column cellTemplate="descButtonTemplate"></dxi-column>
+    <dxi-column dataField="event_id" caption="" cellTemplate="ackButtonTemplate"></dxi-column>
+    <!--
+			<div *dxTemplate="let d of 'evTypCellTemplate'" [class]="(d | gridCellData).diff > 0 ? 'inc' : 'dec'">
+				<span class="current-value">{{(d | gridCellData).value | currency:'USD':true}}</span>
+				<span class="diff">{{(d | gridCellData).diff | number:'.2'}}</span>
+			</div>
+			-->
+    <div *dxTemplate="let d of 'evTypCellTemplate'"
+         [class]="getEventTypeClassName(d.value)">
+
+    </div>
+    <div *dxTemplate="let d of 'evDateCellTemplate'">
+      <span>{{getDateString(d.value)}}</span>
+    </div>
+
+    <div *dxTemplate="let x of 'descButtonTemplate'">
+      <dx-button text="..." (onClick)="showDescription(x)"></dx-button>
+    </div>
+
+    <div *dxTemplate="let x of 'ackButtonTemplate'">
+      <dx-button *ngIf="x.data.event_type >= 2 && !x.data.ack" icon="check" type="normal" (onClick)="setACK(x)"></dx-button>
+    </div>
+
+  </dx-data-grid>
+
+  <dx-popup
+          [width]="'80%'"
+          [height]="'60%'"
+          [showTitle]="true"
+          title="Ereignis-Text:"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="true"
+          [(visible)]="popupVisible">
+    <div *dxTemplate="let data of 'content'">
+      <dx-scroll-view id="scrollview">
+        <div [innerHTML]="current_description"></div>
+      </dx-scroll-view>
+    </div>
+  </dx-popup>
+</div>
