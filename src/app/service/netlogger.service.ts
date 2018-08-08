@@ -14,25 +14,25 @@ import {
   DisplayItemNumberValue,
   DisplayItemStringValue,
   UserCustomerAccessObject
-} from "../models/interfaces";
-import * as moment from "moment";
-import notify from "devextreme/ui/notify";
-import { NetLoggerServiceCommands } from "./netlogger.service.commands";
+} from '../models/interfaces';
+import * as moment from 'moment';
+import notify from 'devextreme/ui/notify';
+import { NetLoggerServiceCommands } from './netlogger.service.commands';
 
 @Injectable()
 export class NetloggerService {
-  public url_netlogger_service = "http://service.netlogger.eu";
-  // public url_netlogger_service = 'http://localhost:8992';
+  // public url_netlogger_service = 'http://service.netlogger.eu';
+  public url_netlogger_service = 'http://localhost:8994';
   // public url_netlogger_service = 'http://blaurock.synology.me:8994';
   public url_netlogger_service_command =
-    this.url_netlogger_service + "/cmd?jsoncommand";
-  public current_user_name = "";
-  public current_token = "";
+    this.url_netlogger_service + '/cmd?jsoncommand';
+  public current_user_name = '';
+  public current_token = '';
   public isAuthenticated = false;
   private authState = new Subject<boolean>();
   public current_customer: Customer;
   private current_customer_state = new Subject<string>();
-  private current_headline = "";
+  private current_headline = '';
   private current_headline_state = new Subject<string>();
   public isEditMode = false;
   private isEditModeState = new Subject<boolean>();
@@ -40,13 +40,13 @@ export class NetloggerService {
 
   constructor(private http: HttpClient, private router: Router) {
     console.log(
-      "Constructor von NetLoggerService wird ausgeführt! isAuthenticated=" +
+      'Constructor von NetLoggerService wird ausgeführt! isAuthenticated=' +
         this.isAuthenticated
     );
-    this.current_token = localStorage.getItem("nl_user_token");
+    this.current_token = localStorage.getItem('nl_user_token');
     this.isAuthenticated =
-      this.current_token != null && this.current_token !== "";
-    this.current_user_name = localStorage.getItem("nl_user_name");
+      this.current_token != null && this.current_token !== '';
+    this.current_user_name = localStorage.getItem('nl_user_name');
     // Wenn der Service gestartet wird, dann kann ich nicht einfach isAuthenticated auf true setzen, wenn
     // ein token im localStorage gefunden wird. Er muss bei jeder Service-Instanz neu geprüft werden
 

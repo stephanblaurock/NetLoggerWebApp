@@ -1,0 +1,20 @@
+{
+  "background_color": "#E7E7E7",
+  "description": "netLogger Energie- und Fehlermonitoring",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "assets/netlogger_logo.png",
+      "sizes": "242x242",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/netlogger_big_trans_white.png",
+      "sizes": "1200x300",
+      "type": "image/png"
+    }
+  ],
+  "name": "netLogger monitoring",
+  "short_name": "netLogger",
+  "start_url": "/index.html"
+}

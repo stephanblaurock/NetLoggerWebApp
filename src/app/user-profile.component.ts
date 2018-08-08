@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, HostListener, ViewChild} from '@angular/core';
 import {UserProfile} from './models/user-models';
 import {NetLoggerServiceCommands} from './service/netlogger.service.commands';
 import {NetloggerService} from './service/netlogger.service';
 import notify from 'devextreme/ui/notify';
 import {EnergyBalanceConfig} from "./models/dashboards/energy-balance";
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import { DxFormComponent } from '../../node_modules/devextreme-angular';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,14 +14,19 @@ import {Router} from "@angular/router";
   encapsulation: ViewEncapsulation.None
 })
 export class UserProfileComponent implements OnInit {
+  @ViewChild(DxFormComponent) myform: DxFormComponent;
   userProfile: UserProfile;
   isAdmin = false;
+  innerWidth: any;
+  labelLocation = 'left';
 
   constructor(private netLoggerService: NetloggerService, private router: Router) {
     this.isAdmin = this.netLoggerService.currentUserIsAdmin();
   }
 
   ngOnInit() {
+    this.innerWidth = window.innerWidth;
+    this.labelLocation = this.innerWidth > 500 ? 'left' : 'top';
     this.netLoggerService.doCommand(NetLoggerServiceCommands.getUserProfile()).subscribe(
       data => {
         if (data.ReturnCode === 200) {
@@ -30,6 +36,12 @@ export class UserProfileComponent implements OnInit {
           // dc.validate();
         }
       });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    this.labelLocation = this.innerWidth > 500 ? 'left' : 'top';
   }
 
   saveProfile() {
@@ -67,7 +79,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   sendUserNotification(statusPerMail: boolean, statusPerMessenger: boolean, errorPerMail: boolean, errorPerMessenger: boolean) {
-    this.netLoggerService.doCommand(NetLoggerServiceCommands.sendUserNotification(statusPerMail, statusPerMessenger, errorPerMail, errorPerMessenger)).subscribe(
+    this.netLoggerService.doCommand(NetLoggerServiceCommands.sendUserNotification(statusPerMail, statusPerMessenger,
+      errorPerMail, errorPerMessenger)).subscribe(
       data => {
         if (data.ReturnCode === 200) {
           notify(data.ReturnMessage);

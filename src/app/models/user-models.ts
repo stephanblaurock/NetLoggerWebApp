@@ -4,11 +4,19 @@ export class UserProfile {
   EMail: string;
   Mobil: string;
   Password: string;
+  ChatToken: string;
   UserNotification: UserNotification;
 }
 
 export class UserNotification {
   UserID: number;
+  ErrorsPerMail: boolean;
+  ErrorsPerMessenger: boolean;
+  ReportsDaily: boolean;
+  ReportsDailyMailAddresses: boolean;
+  ReportsMonthly: boolean;
+  ReportsMonthlyMailAddresses: boolean;
+
   DailyStatus: boolean;
   DailyOnlyOnError: boolean;
   DailyWithEMail: boolean;

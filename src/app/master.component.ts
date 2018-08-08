@@ -38,6 +38,7 @@ export class MasterComponent implements OnInit {
     this.refreshUserHealthStatus();
   }
   onLogout() {
+    this.isCollapsed = true;
     this.netloggerService.logout();
     this.router.navigate(['/login']);
   }

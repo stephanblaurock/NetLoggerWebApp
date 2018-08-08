@@ -12,6 +12,11 @@ h1, h2, h3, h4, h5, h6, .font-alt {
   color: #BE392B;
 }
 
+.small-text-light {
+  font-size: x-small;
+  color: #666;
+}
+
 main {
   margin-top: 80px;
 }
@@ -21,6 +26,7 @@ main {
 .d-relative {
 	position: relative;
 }
+
 
 /*** Navbar ***/
 #home .logo {
@@ -97,8 +103,10 @@ main {
   border-width: 0px;
 }
 
-.form-control {
-  background: #d8d8d8;
+.form-control-plaintext {
+  background: #BBBBBB;
+  color: black;
+  border-radius: 3px;
 }
 
 /* Navigationsmenu-Styles */

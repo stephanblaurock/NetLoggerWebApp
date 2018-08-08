@@ -24,10 +24,11 @@
             ],
             "styles": [
 			        "node_modules/devextreme/dist/css/dx.common.css",
-              "node_modules/devextreme/dist/css/dx.light.css",
+              "node_modules/devextreme/dist/css/dx.dark.css",
               "node_modules/devextreme/dist/css/dx.spa.css",
               "node_modules/prismjs/themes/prism-okaidia.css",
-              "src/assets/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+
               "src/assets/css/simple-line-icons.css",
               "src/styles.css"
             ],

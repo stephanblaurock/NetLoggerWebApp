@@ -1,6 +1,64 @@
 <div *ngIf="userProfile" class="row">
-  <div class="col-lg">
-    <div>
+  <div class="col-12">
+    <h3>Benutzerprofil
+      <span class="small-text-light">#{{userProfile.UserID}}</span>
+    </h3>
+  </div>
+
+  <div class="col-12">
+    <dx-form [colCount]="1" [formData]="userProfile" [labelLocation]="labelLocation">
+      <dxi-item dataField="Name"> <dxi-validation-rule
+        type="required"
+        message="Bitte Namen ausfüllen!">
+    </dxi-validation-rule></dxi-item>
+      <dxi-item dataField="EMail"></dxi-item>
+      <dxi-item dataField="Mobil"></dxi-item>
+      <dxi-item dataField="Password" [editorOptions]="{ mode: 'password' }">
+      </dxi-item>
+
+      <dxi-item itemType="group" caption="Benachrichtigungen">
+        <!-- Benachrichtigungswege -->
+        <dxi-item dataField="UserNotification.ErrorsPerMail" editorType="dxCheckBox">
+          <dxo-label text="Fehler per Mail" location="left" horizontalAlignment="left"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="UserNotification.ErrorsPerMessenger" editorType="dxCheckBox">
+          <dxo-label text="Fehler per Messenger" location="left" horizontalAlignment="left"></dxo-label>
+
+        </dxi-item>
+        <dxi-item>
+          <div *dxTemplate>
+              <div class="dx-field">
+                  <div class="dx-field-label"></div>
+                  <div class="dx-field-value">
+                    <span>persönlicher Telegram-Token: <span class="text-info font-weight-bold">{{userProfile.ChatToken}}</span></span>
+                  </div>
+                </div>
+          </div>
+        </dxi-item>
+
+
+        <!-- tägliche Reports -->
+        <dxi-item dataField="UserNotification.ReportsDaily" editorType="dxCheckBox">
+          <dxo-label text="tägliche Berichte" location="left" horizontalAlignment="left"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="UserNotification.ReportsDailyMailAddresses">
+          <dxo-label text="E-Mail-Adressen" location="top"></dxo-label>
+        </dxi-item>
+        <!-- monatliche Reports -->
+        <dxi-item dataField="UserNotification.ReportsMonthly" editorType="dxCheckBox">
+          <dxo-label text="monatliche Berichte" location="left" horizontalAlignment="left"></dxo-label>
+        </dxi-item>
+        <dxi-item dataField="UserNotification.ReportsMonthlyMailAddresses">
+          <dxo-label text="E-Mail-Adressen" location="top"></dxo-label>
+        </dxi-item>
+      </dxi-item>
+    </dx-form>
+    <button class="btn btn-success" (click)="saveProfile()">speichern</button>
+  </div>
+</div>
+
+
+<!--div>
       <h3>Benutzerdaten
         <dx-button text="Benutzer abmelden" type="dark" (onClick)="logout()"></dx-button>
       </h3>
@@ -95,7 +153,7 @@
     <br>
 
 
-    <!--div class="col-md"-->
+
     <h3>monatliche Dashboard-Berichte</h3>
     <dx-check-box text="monatliche Berichte verschicken aktivieren"
                   [(ngModel)]="userProfile.UserNotification.MonthlyStatus"></dx-check-box>
@@ -117,11 +175,10 @@
     <br>
     <br>
   </div>
-  <!--/1--div-->
-</div>
-<div class="row">
+
+
+<di class="row">
   <div class="col-md">
     <dx-button text="speichern" type="success" (onClick)="saveProfile()"></dx-button>
   </div>
-</div>
-
+</di-->
