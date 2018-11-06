@@ -58,22 +58,22 @@ export class NetloggerService {
   doRequestGet(url: string): Observable<string> {
     // const body = JSON.stringify(data);
     // const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get(url, { responseType: "text" });
+    return this.http.get(url, { responseType: 'text' });
   }
 
   doRequest(url: string, data: any): Observable<string> {
     const body = JSON.stringify(data);
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<string>(url, body, { headers: headers });
   }
 
   doCommand(cmd: JsonCommand): Observable<any> {
     // der user und der token wird immer mitgeliefert
-    cmd.addParameter("user", this.current_user_name);
-    cmd.addParameter("token", this.current_token);
+    cmd.addParameter('user', this.current_user_name);
+    cmd.addParameter('token', this.current_token);
     const body = cmd.toJson();
-    console.log("Command wird gesendet: " + body);
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    console.log('Command wird gesendet: ' + body);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.url_netlogger_service_command, body, {
       headers: headers
     });
@@ -85,7 +85,7 @@ export class NetloggerService {
   }
 
   tryAutoLogin() {
-    const password = localStorage.getItem("nl_password");
+    const password = localStorage.getItem('nl_password');
     if (password && !this.isAuthenticated) {
       this.signinUser(this.current_user_name, password, false);
     }
@@ -94,13 +94,13 @@ export class NetloggerService {
   signinUser(username: string, password: string, autologin: boolean) {
     // nach den Erfolgreichen einloggen den AuthState setzen
     const cmd = new JsonCommand();
-    cmd.ModuleName = "Modules.NetLogger.Service.NetLoggerService";
-    cmd.CommandName = "Login";
-    cmd.addParameter("user", username);
-    cmd.addParameter("password", password);
+    cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
+    cmd.CommandName = 'Login';
+    cmd.addParameter('user', username);
+    cmd.addParameter('password', password);
     const body = cmd.toJson();
-    console.log('Ich versuch mich jetzt mit folgendem Befehl einzuloggen');
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    // console.log('Ich versuch mich jetzt mit folgendem Befehl einzuloggen');
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.http
       .post<any>(this.url_netlogger_service_command, body, { headers: headers })
       .subscribe(data => {
@@ -108,18 +108,18 @@ export class NetloggerService {
         if (data.ReturnCode === 1) {
           this.current_token = data.ReturnValue;
           this.current_user_name = username;
-          localStorage.setItem("nl_user_token", this.current_token);
-          localStorage.setItem("nl_user_name", this.current_user_name);
+          localStorage.setItem('nl_user_token', this.current_token);
+          localStorage.setItem('nl_user_name', this.current_user_name);
           if (autologin) {
-            localStorage.setItem("nl_password", password);
+            localStorage.setItem('nl_password', password);
           }
           this.isAuthenticated = true;
           this.authState.next(true);
           console.log(
-            "Benutzer wurde erfolgreich eingeloggt! Token:" + this.current_token
+            'Benutzer wurde erfolgreich eingeloggt! Token:' + this.current_token
           );
           // wenn erfolgreich eingeloggt, dann automatisch auf 'News' routen
-          this.router.navigate(["/customers"]);
+          this.router.navigate(['/customers']);
         } else {
           console.log(data.ReturnMessage);
           alert(data.ReturnMessage);
@@ -132,7 +132,7 @@ export class NetloggerService {
   }
 
   currentUserIsAdmin() {
-    if (this.current_user_name === "admin@netlogger.eu") {
+    if (this.current_user_name === 'admin@netlogger.eu') {
       return true;
     } else if (
       this.userCustomerAccessObject &&
@@ -144,9 +144,11 @@ export class NetloggerService {
   }
 
   setCurrentCustomer(customer: Customer) {
+    console.log('SetCurrentCustomer:');
+    console.log(customer);
     this.current_customer = customer;
     this.reloadUserCustomerAccessObject();
-    let name = "";
+    let name = '';
     if (this.current_customer != null) {
       name = this.current_customer.caption;
     }
@@ -167,7 +169,7 @@ export class NetloggerService {
     ).subscribe(data => {
       if (data.ReturnCode === 200) {
         console.log(
-          "reloadUserCustomerAccessObject: Ich bekam vom Server folgende Daten -> " +
+          'reloadUserCustomerAccessObject: Ich bekam vom Server folgende Daten -> ' +
             data.ReturnCode
         );
         console.log(data.ReturnValue);
@@ -243,6 +245,7 @@ export class NetloggerService {
     localStorage.removeItem('nl_password');
     this.current_token = '';
     this.current_user_name = '';
+    this.current_customer = undefined;
     this.isAuthenticated = false;
     this.authState.next(false);
   }
@@ -352,9 +355,9 @@ export class NetloggerService {
   }
 
   getImageFromUnit(unit: string): string {
-    if (unit === 'kWh' || unit === 'Wh' || unit === 'km' || unit === 'Stk.')
+    if (unit === 'kWh' || unit === 'Wh' || unit === 'km' || unit === 'Stk.') {
       return 'Counter.png';
-    else if (
+    } else if (
       unit === 'kW' ||
       unit === 'W' ||
       unit === 'V' ||
@@ -365,37 +368,45 @@ export class NetloggerService {
       unit === 'A' ||
       unit === 'min/km' ||
       unit === 'km/h'
-    )
+    ) {
       return 'Speed.png';
-    else if (unit === 'm³') return 'cube.png';
-    else if (unit === '€') return 'euro.png';
-    else if (unit === 'Ah') return 'battery.png';
-    else if (unit === 'm') return 'length.png';
-    else if (unit === 'kcal') return 'kcal.png';
-    else if (unit === 's' || unit === 'min' || unit === 'h')
+    } else if (unit === 'm³') {
+      return 'cube.png';
+    } else if (unit === '€') {
+      return 'euro.png';
+    } else if (unit === 'Ah') {
+      return 'battery.png';
+    } else if (unit === 'm') {
+      return 'length.png';
+    } else if (unit === 'kcal') {
+      return 'kcal.png';
+    } else if (unit === 's' || unit === 'min' || unit === 'h') {
       return 'stopwatch.png';
-    else if (unit === 'Hz' || unit === 'kHz') return 'sine.png';
-    else if (unit === 'm/s') return 'Wind.png';
-    else if (unit === 'lux' || unit === 'klux') return 'Sun.png';
-    else if (unit === '°C' || unit === '°F') return 'Thermometer.png';
-    else if (unit === 'g' || unit === 'kg' || unit === 't') return 'weight.png';
-    else if (unit === 'l') return 'water.png';
+    } else if (unit === 'Hz' || unit === 'kHz') {
+      return 'sine.png';
+    } else if (unit === 'm/s') {
+      return 'Wind.png';
+    } else if (unit === 'lux' || unit === 'klux') {
+      return 'Sun.png';
+    } else if (unit === '°C' || unit === '°F') {
+      return 'Thermometer.png';
+    } else if (unit === 'g' || unit === 'kg' || unit === 't') {
+      return 'weight.png';
+    } else if (unit === 'l') {
+      return 'water.png';
+    }
     return 'empty.png';
   }
 
   getSensorGroupImage(inter_face: string, typ: string) {
-    if (typ === 'Solar-Log 500') return 'solarlog-500.jpg';
-    else if (typ === 'Solar-Log 1000') return 'solarlog-1000.jpg';
-    else if (typ === 'Solar-Log 1200') return 'solarlog-1200.png';
-    else if (typ === 'Siemens PAC3200') return 'siemens_pac3200.jpg';
-    else if (typ === 'SDM630-MCT' || typ === 'SDM630-M') return 'sdm630v2.jpg';
-    if (inter_face === 'FRITZPLUG') return 'fritzplug.jpg';
-    else if (inter_face === 'KNX') return 'knx-eib.jpg';
-    else if (inter_face === 'MODBUS') return 'modbus.png';
-    else if (inter_face === 'RPICT7') return 'rpict7.png';
-    else if (inter_face === 'SMARTPI') return 'smart_pi.jpg';
-    else if (inter_face === 'MAXWEB') return 'solarmax_maxweb.jpg';
-    else if (typ) return typ;
+    if (typ === 'Solar-Log 500') {
+      return 'solarlog-500.jpg';
+    } else if (typ === 'Solar-Log 1000') {
+      return 'solarlog-1000.jpg';
+    } else if (typ === 'Solar-Log 1200') {
+      return 'solarlog-1200.png'; }
+    else if (typ === 'Siemens PAC3200') { return 'siemens_pac3200.jpg'; } else if (typ === 'SDM630-MCT' || typ === 'SDM630-M') { return 'sdm630v2.jpg'; }
+    if (inter_face === 'FRITZPLUG') { return 'fritzplug.jpg'; } else if (inter_face === 'KNX') { return 'knx-eib.jpg'; } else if (inter_face === 'MODBUS') { return 'modbus.png'; } else if (inter_face === 'RPICT7') { return 'rpict7.png'; } else if (inter_face === 'SMARTPI') { return 'smart_pi.jpg'; } else if (inter_face === 'MAXWEB') { return 'solarmax_maxweb.jpg'; } else if (typ) { return typ; }
     return 'empty.png';
   }
 
@@ -452,9 +463,7 @@ export class NetloggerService {
   }
 
   getHealthStatusCaption(health_status: number): string {
-    if (health_status === 0) return 'Warnung!';
-    else if (health_status === -1) return 'Fehler!';
-    else return 'OK';
+    if (health_status === 0) { return 'Warnung!'; } else if (health_status === -1) { return 'Fehler!'; } else { return 'OK'; }
   }
 
   getHealthStatusImage(health_status: number): string {
@@ -479,12 +488,7 @@ export class NetloggerService {
   }
 
   getSourceTypeCaption(source_type: number) {
-    if (source_type === 1) return 'Sensor';
-    else if (source_type === 2) return 'ServiceBox';
-    else if (source_type === 3) return 'Meßspur';
-    else if (source_type === 4) return 'Kunde';
-    else if (source_type === 5) return 'Sensor-Gruppe';
-    else if (source_type === 6) return 'Meßgerät/Meßspurgruppe';
+    if (source_type === 1) { return 'Sensor'; } else if (source_type === 2) { return 'ServiceBox'; } else if (source_type === 3) { return 'Meßspur'; } else if (source_type === 4) { return 'Kunde'; } else if (source_type === 5) { return 'Sensor-Gruppe'; } else if (source_type === 6) { return 'Meßgerät/Meßspurgruppe'; }
     return '';
   }
 

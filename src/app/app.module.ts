@@ -62,6 +62,7 @@ import { MessengerComponent } from './admin/views/messenger.component';
 import { EventlogPlainWidgetComponent } from './widgets/eventlog-plain-widget.component';
 import { WartungenComponent } from './admin/views/wartungen.component';
 import de from '@angular/common/locales/de';
+import { DeviceGroupCopyDialogComponent } from './dialogs/device-group-copy-dialog.component';
 
 registerLocaleData(de, 'de-DE');
 
@@ -82,7 +83,8 @@ const APP_ROUTES: Routes = [
       {path: 'sensors', component: SensorsComponent},
       {path: 'sensors/:id', component: SensorGroupComponent},
       {path: 'sensors/:id/edit', component: SensorgroupEditComponent},
-      {path: 'actors', component: ActorsComponent}
+      {path: 'actors', component: ActorsComponent},
+      {path: 'devicegroupcopydialog', component: DeviceGroupCopyDialogComponent}
     ]
   },
   {path: 'failurelist', component: EventlogPlainWidgetComponent, canActivate: [ProtectedGuard]},
@@ -133,7 +135,8 @@ const APP_ROUTES: Routes = [
     UserProfileComponent,
     MessengerComponent,
     EventlogPlainWidgetComponent,
-    WartungenComponent
+    WartungenComponent,
+    DeviceGroupCopyDialogComponent
   ],
   imports: [
     BrowserModule,

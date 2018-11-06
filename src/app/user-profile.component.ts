@@ -3,7 +3,7 @@ import {UserProfile} from './models/user-models';
 import {NetLoggerServiceCommands} from './service/netlogger.service.commands';
 import {NetloggerService} from './service/netlogger.service';
 import notify from 'devextreme/ui/notify';
-import {EnergyBalanceConfig} from "./models/dashboards/energy-balance";
+import {EnergyBalanceConfig} from './models/dashboards/energy-balance';
 import {Router} from '@angular/router';
 import { DxFormComponent } from '../../node_modules/devextreme-angular';
 

@@ -110,13 +110,18 @@ export class SensorGroupComponent implements OnInit, OnDestroy {
 
   setCurrentDevice(device: DeviceLight) {
     // console.log("sensor-group.component.setCurrentSensor wurde aufgerufen!");
-    if (this.currentDevice && device && this.currentDevice.device_id === device.device_id)
-      return; // wenn der übergebene Sensor schon der aktuelle Sensor ist, dann nix machen
+    if (this.currentDevice && device && this.currentDevice.device_id === device.device_id) {
+      return;
+    } // wenn der übergebene Sensor schon der aktuelle Sensor ist, dann nix machen
     this.currentDevice = device;
 
     if (this.currentDevice) {
       this.chartConfig = EnergyBalanceTest.createConfigFromDevice(this.customerIDFromURL, this.currentDevice);
     }
+  }
+
+  copyDeviceGroup() {
+    this.router.navigateByUrl('/customers/' + this.customerIDFromURL + '/devicegroupcopydialog?devicegroup_id=' + this.deviceGroupIDFromURL);
   }
 
   getDeviceImageUrl(unit: string) {
@@ -216,7 +221,7 @@ export class SensorGroupComponent implements OnInit, OnDestroy {
   selectDeviceOnPopup() {
     this.popupDevicePickerVisible = false;
     // ausgewähltes Device merken
-    let selDevs = this.devicePicker.getSelectedDeviceInfos();
+    const selDevs = this.devicePicker.getSelectedDeviceInfos();
     if (selDevs && selDevs.length > 0) {
       this.selectedTargetDeviceForDataCopy = selDevs[0];
     }
@@ -265,7 +270,7 @@ export class SensorGroupComponent implements OnInit, OnDestroy {
       device_id: this.currentDevice.device_id,
       time_stamp: mydate,
       correction: this.counterCorrectionValue
-    }
+    };
     console.log('Counter-Correction:');
     console.log(corr);
     this.popupCounterCorrectionVisible = false;
@@ -334,7 +339,7 @@ export class SensorGroupComponent implements OnInit, OnDestroy {
 
   getTileStyle(deviceInfo: DeviceLight) {
     if (!deviceInfo.is_active) {
-      return {'opacity': 0.4};
+      return {'opacity': 0.8};
     }
     return {};
   }
@@ -378,5 +383,25 @@ export class SensorGroupComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  deleteDeviceGroup() {
+    if (confirm('Möchten Sie wirklich unwiderruflich die Meßspur löschen?')) {
+      console.log('ich soll löschen!');
+      this.netLoggerService.doCommand(NetLoggerServiceCommands.deleteDeviceGroup(this.customerIDFromURL, this.deviceGroupIDFromURL)).subscribe(
+        data => {
+          console.log(data);
+          if (data.ReturnCode === 200) {
+            notify(data.ReturnMessage);
+            // zurückspringen auf die Sensors-Seite
+            this.router.navigateByUrl('/customers/' + this.customerIDFromURL + '/sensors');
+          } else {
+            notify(data.ReturnMessage);
+          }
+        }
+      );
+    } else {
+      console.log('ich soll nicht löschen!');
+    }
   }
 }

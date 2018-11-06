@@ -16,19 +16,19 @@ import {
 import * as moment from 'moment';
 import {CounterCorrection} from '../models/counter-correction';
 import {UserProfile} from '../models/user-models';
-import {EventLogFilter} from "../models/eventlog-models";
-import {DeviceGroupLight} from "../models/devices";
+import {EventLogFilter} from '../models/eventlog-models';
+import {DeviceGroupLight} from '../models/devices';
 
 export class NetLoggerServiceCommands {
   public static getUsers(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.Users.Service.UserService';
     cmd.CommandName = 'GetUsers';
     return cmd;
   }
 
   public static setDebugging(is_active: boolean): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetDebugging';
     cmd.addParameter('is_active', is_active);
@@ -36,14 +36,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static doMaintenance(is_active: boolean): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DoMaintenance';
     return cmd;
   }
 
   public static getUser(user_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.Users.Service.UserService';
     cmd.CommandName = 'GetUser';
     cmd.addParameter('user_id', user_id);
@@ -51,7 +51,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setUser(usr: User): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.Users.Service.UserService';
     cmd.CommandName = 'SetUser';
     cmd.addParameter('user_data', usr);
@@ -59,7 +59,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createUser(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.Users.Service.UserService';
     cmd.CommandName = 'CreateUser';
     return cmd;
@@ -70,7 +70,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static validateLastConnected(custID: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'ValidateLastConnected';
     cmd.addParameter('cust_id', custID);
@@ -78,14 +78,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static getUserHealthStatus(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetUserHealthStatus';
     return cmd;
   }
 
   public static refreshHealthStatus(custID: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'RefreshHealthStatus';
     cmd.addParameter('cust_id', custID);
@@ -93,7 +93,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static recalculateHealthStatus(custID: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'RecalculateHealthStatus';
     cmd.addParameter('cust_id', custID);
@@ -102,7 +102,7 @@ export class NetLoggerServiceCommands {
 
 
   public static getCustomerList(withMaster: boolean, sortOrder: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetCustomerList';
     cmd.addParameter('with_master', withMaster);
@@ -111,7 +111,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getUserCustomerAccessList(user_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetUserCustomerAccessList';
     cmd.addParameter('user_id', user_id);
@@ -119,7 +119,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getUserCustomerAccessObject(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetUserCustomerAccessObject';
     cmd.addParameter('cust_id', cust_id);
@@ -127,7 +127,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setUserCustomerAccessList(user_id: number, accessList: Array<UserCustomerAccess>): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetUserCustomerAccessList';
     cmd.addParameter('user_id', user_id);
@@ -136,14 +136,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static createCustomer(): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreateCustomer';
     return cmd;
   }
 
   public static getCustomer(cust_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetCustomer';
     cmd.addParameter('cust_id', cust_id);
@@ -151,7 +151,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateCustomer(cust: Customer): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateCustomer';
     cmd.addParameter('customer', cust);
@@ -159,7 +159,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteCustomer(cust_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteCustomer';
     cmd.addParameter('cust_id', cust_id);
@@ -167,7 +167,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getIPCList(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetIPCList';
     cmd.addParameter('cust_id', cust_id);
@@ -175,7 +175,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getIPC(ipc_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetIPC';
     cmd.addParameter('ipc_id', ipc_id);
@@ -183,7 +183,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateIPC(ipc: IPC): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateIPC';
     cmd.addParameter('ipc', ipc);
@@ -191,7 +191,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteIPC(ipc_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteIPC';
     cmd.addParameter('ipc_id', ipc_id);
@@ -199,14 +199,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static getAppTypeNames(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetAppTypeNames';
     return cmd;
   }
 
   public static getAppPackages(app_type_name: string): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetAppPackages';
     cmd.addParameter('app_type_name', app_type_name);
@@ -218,7 +218,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getSensorGroupList(cust_id: number, include_templates: boolean, only_templates: boolean, only_unmapped_ipc: boolean, only_unmapped_device, inter_face: string): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetSensorGroupList';
     cmd.addParameter('cust_id', cust_id);
@@ -230,7 +230,7 @@ export class NetLoggerServiceCommands {
     return cmd;
   }
   public static disconnectSensorGroup(cust_id: number, sensor_group_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DisconnectSensorGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -239,7 +239,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateSensorGroupsCurrentValue(cust_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateSensorGroupsCurrentValue';
     cmd.addParameter('cust_id', cust_id);
@@ -247,7 +247,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static connectSensorGroup(cust_id: number, sensor_group_id: number, device_group_id): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'ConnectSensorGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -257,7 +257,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createSensorGroup(cust_id: number, caption: string): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreateSensorGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -266,7 +266,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getSensorGroup(cust_id: number, sensor_group_id: number, device_group_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetSensorGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -276,7 +276,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateSensorGroup(sensor_group: SensorGroup): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateSensorGroup';
     cmd.addParameter('sensor_group', sensor_group);
@@ -284,7 +284,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setLastReadOut(cust_id: number, sensorGroupID: number, timeStamp: Date): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetLastReadOut';
     cmd.addParameter('CustomerID', cust_id);
@@ -293,7 +293,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteSensorGroup(cust_id: number, sensor_group_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteSensorGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -302,7 +302,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static copySensorGroup(source_cust_id: number, source_sensor_group_id: number, dest_cust_id: number, only_prefered_sensors: boolean): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CopySensorGroup';
     cmd.addParameter('source_cust_id', source_cust_id);
@@ -313,16 +313,16 @@ export class NetLoggerServiceCommands {
   }
 
   public static uploadSensorData(cust_id: number, data: string): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UploadSensorData';
     cmd.addParameter('CustID', cust_id);
-    cmd.addParameter('Data', data)
+    cmd.addParameter('Data', data);
     return cmd;
   }
 
   public static uploadSimpleSensorData(custID: number, sensorID: number, deviceID: number, timeStamp: Date, value: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UploadSimpleSensorData';
     cmd.addParameter('CustID', custID);
@@ -334,7 +334,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static copyMeasuredValues(cust_id: number, sourceDeviceID: number, destDeviceID: number, from: Date, to: Date, overwrite: boolean): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CopyMeasuredValues';
     cmd.addParameter('cust_id', cust_id);
@@ -347,7 +347,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getEventLogs(filter: EventLogFilter): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetEventLogs';
     cmd.addParameter('cust_id', filter.cust_id);
@@ -359,7 +359,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getEventLog(custID: number, eventID: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetEventLog';
     cmd.addParameter('cust_id', custID);
@@ -368,7 +368,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteEventLogs(cust_id: number, event_type_filter: number, event_code_filter: number, event_source_type_filter: number, source_id_filter: number, eventlog_ids: number[]): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteEventLogs';
     cmd.addParameter('cust_id', cust_id);
@@ -381,7 +381,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getPlantList(cust_id: number, parent_plant_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetPlantList';
     cmd.addParameter('cust_id', cust_id);
@@ -390,7 +390,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getPlant(cust_id: number, plant_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetPlant';
     cmd.addParameter('cust_id', cust_id);
@@ -399,7 +399,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createPlant(cust_id: number, parent_plant_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreatePlant';
     cmd.addParameter('cust_id', cust_id);
@@ -408,7 +408,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updatePlant(cust_id: number, plant: Plant): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdatePlant';
     cmd.addParameter('cust_id', cust_id);
@@ -417,7 +417,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setDeviceGroupPlantRelation(cust_id: number, device_group_id: number, plant_id: number) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetDeviceGroupPlantRelation';
     cmd.addParameter('cust_id', cust_id);
@@ -427,7 +427,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deletePlant(cust_id: number, plant_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeletePlant';
     cmd.addParameter('cust_id', cust_id);
@@ -436,7 +436,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createDeviceFromSensor(cust_id: number, from_sensor_id: number, to_device_group_id: number) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreateDeviceFromSensor';
     cmd.addParameter('cust_id', cust_id);
@@ -446,7 +446,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteDevice(cust_id: number, device_id: number) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteDevice';
     cmd.addParameter('cust_id', cust_id);
@@ -455,7 +455,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDevice(cust_id: number, device_id: number) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDevice';
     cmd.addParameter('cust_id', cust_id);
@@ -464,7 +464,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateDevice(cust_id: number, device: Device) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateDevice';
     cmd.addParameter('cust_id', cust_id);
@@ -473,7 +473,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDeviceGroupList(cust_id: number, plant_id: number, include_devices: boolean): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDeviceGroupList';
     cmd.addParameter('cust_id', cust_id);
@@ -483,7 +483,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getSummarizedDeviceAndSensorList(cust_id: number, include_devices: boolean): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetSummarizedDeviceAndSensorList';
     cmd.addParameter('cust_id', cust_id);
@@ -492,7 +492,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteDeviceGroup(cust_id: number, device_group_id: number) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteDeviceGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -501,7 +501,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createDeviceGroup(cust_id: number, caption: string) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreateDeviceGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -510,7 +510,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDeviceGroup(cust_id: number, device_group_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDeviceGroup';
     cmd.addParameter('cust_id', cust_id);
@@ -519,14 +519,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateDeviceGroup(deviceGroup: DeviceGroup): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateDeviceGroup';
     cmd.addParameter('device_group', deviceGroup);
     return cmd;
   }
   public static getDeviceGroupLight(cust_id: number, device_group_id: number): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDeviceGroupLight';
     cmd.addParameter('cust_id', cust_id);
@@ -535,15 +535,29 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateDeviceGroupLight(deviceGroup: DeviceGroupLight): any {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateDeviceGroupLight';
     cmd.addParameter('device_group', deviceGroup);
     return cmd;
   }
 
+  public static copyDeviceGroup(custID: number, sourceDeviceGroupID: number, destDeviceGroupID: number, destDeviceGroupCaption: string, deviceIDList: number[], fromDay: Date, toDay: Date): JsonCommand {
+    const cmd = new JsonCommand();
+    cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
+    cmd.CommandName = 'CopyDeviceGroup';
+    cmd.addParameter('cust_id', custID);
+    cmd.addParameter('source_device_group_id', sourceDeviceGroupID);
+    cmd.addParameter('dest_device_group_id', destDeviceGroupID);
+    cmd.addParameter('dest_device_group_caption', destDeviceGroupCaption);
+    cmd.addParameter('device_id_list', deviceIDList);
+    cmd.addParameter('from_day', fromDay);
+    cmd.addParameter('to_day', toDay);
+    return cmd;
+  }
+
   public static getDeviceListByGroupID(cust_id: number, device_group_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDeviceList';
     cmd.addParameter('cust_id', cust_id);
@@ -552,7 +566,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDeviceListByDeviceIDs(cust_id: number, device_ids: number[]): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDeviceList';
     cmd.addParameter('cust_id', cust_id);
@@ -561,7 +575,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDayValues(cust_id: number, device_id: number, day: Date): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDayValues';
     cmd.addParameter('cust_id', cust_id);
@@ -570,7 +584,7 @@ export class NetLoggerServiceCommands {
     return cmd;
   }
   public static calculateDayValues(cust_id: number, device_id: number, from_day: Date, to_day: Date): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CalculateDayValues';
     cmd.addParameter('cust_id', cust_id);
@@ -580,7 +594,7 @@ export class NetLoggerServiceCommands {
     return cmd;
   }
   public static deleteDayValues(cust_id: number, device_id: number, from_day: Date, to_day: Date): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteDayValues';
     cmd.addParameter('cust_id', cust_id);
@@ -591,14 +605,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static getFailureList(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetFailureList';
     return cmd;
   }
 
   public static sendPVReport(cust_ids: number[], do_shrink: boolean) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SendPVReport';
     cmd.addParameter('cust_ids', cust_ids);
@@ -607,7 +621,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setACK(cust_id: number, eventlog_ids: number[]) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetACK';
     cmd.addParameter('cust_id', cust_id);
@@ -616,7 +630,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getCostCenterList(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetCostCenterList';
     cmd.addParameter('cust_id', cust_id);
@@ -624,7 +638,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getYearCostCenterGraphs(cust_id: number, year: number, costcenter: string): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetYearCostCenterGraphs';
     cmd.addParameter('cust_id', cust_id);
@@ -634,7 +648,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDeviceWidgetDataList(cust_id: number, device_ids: number[]): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDeviceWidgetDataList';
     cmd.addParameter('cust_id', cust_id);
@@ -644,7 +658,7 @@ export class NetLoggerServiceCommands {
 
   // ********** DASHBOARDS ************* //
   public static getDashboardList(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDashboardList';
     cmd.addParameter('cust_id', cust_id);
@@ -652,7 +666,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDashboard(cust_id: number, dashboard_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDashboard';
     cmd.addParameter('cust_id', cust_id);
@@ -661,7 +675,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createDashboard(cust_id: number, dashboard_type: number, caption: string): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreateDashboard';
     cmd.addParameter('cust_id', cust_id);
@@ -671,7 +685,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateDashboard(cust_id: number, dashboard: Dashboard): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateDashboard';
     cmd.addParameter('cust_id', cust_id);
@@ -680,7 +694,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteDashboard(cust_id: number, dashboard_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteDashboard';
     cmd.addParameter('cust_id', cust_id);
@@ -689,7 +703,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDashboardWidget(cust_id: number, widget_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDashboardWidget';
     cmd.addParameter('cust_id', cust_id);
@@ -698,7 +712,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static createDashboardWidget(cust_id: number, dashboard_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CreateDashboardWidget';
     cmd.addParameter('cust_id', cust_id);
@@ -707,7 +721,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateDashboardWidget(cust_id: number, widget: DashboardWidget): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateDashboardWidget';
     cmd.addParameter('cust_id', cust_id);
@@ -716,7 +730,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteDashboardWidget(cust_id: number, widget_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteDashboardWidget';
     cmd.addParameter('cust_id', cust_id);
@@ -725,7 +739,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getGraphData(graph_config: GraphWidgetConfig) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetGraphData';
     cmd.addParameter('graph_config', graph_config);
@@ -734,7 +748,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getDashboardData(cust_id: number, config: any) {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetDashboardData';
     cmd.addParameter('cust_id', cust_id);
@@ -743,7 +757,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setCounterCorrection(cust_id: number, counter_correction: CounterCorrection): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetCounterCorrection';
     cmd.addParameter('cust_id', cust_id);
@@ -752,7 +766,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static calculateSummen(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'CalculateSummen';
     cmd.addParameter('cust_id', cust_id);
@@ -760,7 +774,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getManualValueList(cust_id: number, device_id: number, max_rows: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetManualValueList';
     cmd.addParameter('cust_id', cust_id);
@@ -770,7 +784,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static uploadManualValue(cust_id: number, override: boolean, manual_value: ManualValue): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UploadManualValue';
     cmd.addParameter('cust_id', cust_id);
@@ -780,7 +794,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static updateManualValue(cust_id: number, device_id: number, manual_value_id: number, manual_value: ManualValue): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'UpdateManualValue';
     cmd.addParameter('cust_id', cust_id);
@@ -791,7 +805,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static deleteManualValue(cust_id: number, device_id: number, manual_value_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'DeleteManualValue';
     cmd.addParameter('cust_id', cust_id);
@@ -801,7 +815,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static recalculateMonthValues(cust_id: number, from_month: Date, to_month: Date, device_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'RecalculateMonthValues';
     cmd.addParameter('cust_id', cust_id);
@@ -812,7 +826,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static recalculateYearValues(cust_id: number, from_year: Date, to_year: Date, device_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'RecalculateYearValues';
     cmd.addParameter('cust_id', cust_id);
@@ -823,7 +837,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static recalculateAndValidateAllMonthValues(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'RecalculateAndValidateAllMonthValues';
     cmd.addParameter('cust_id', cust_id);
@@ -831,7 +845,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static recalculateAndValidateAllYearValues(cust_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'RecalculateAndValidateAllYearValues';
     cmd.addParameter('cust_id', cust_id);
@@ -839,7 +853,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static autoSensorConfig(cust_id: number, sensor_group_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'AutoSensorConfig';
     cmd.addParameter('CustomerID', cust_id);
@@ -848,7 +862,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static getSolarlogConfig(cust_id: number, sensor_group_id: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetSolarlogConfig';
     cmd.addParameter('CustomerID', cust_id);
@@ -857,7 +871,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static reImportSolarlogData(cust_id: number, sensor_group_id: number, time_stamp: Date, readEvents: boolean, readTagesdaten: boolean, readLeistungsdaten: boolean): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'ReImportSolarlogData';
     cmd.addParameter('CustomerID', cust_id);
@@ -870,14 +884,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static telegramSendAuthRequest(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'Telegram_SendAuthRequest';
     return cmd;
   }
 
   public static telegramMakeAuth(code: string): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'Telegram_MakeAuth';
     cmd.addParameter('code', code);
@@ -885,14 +899,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static telegramReconnect(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'Telegram_Reconnect';
     return cmd;
   }
 
   public static telegramSendMessage(message: string, number: string): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'Telegram_SendMessage';
     cmd.addParameter('message', message);
@@ -901,7 +915,7 @@ export class NetLoggerServiceCommands {
   }
 
   public static setUserProfile(userProfile: UserProfile): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SetUserProfile';
     cmd.addParameter('UserProfile', userProfile);
@@ -909,14 +923,14 @@ export class NetLoggerServiceCommands {
   }
 
   public static getUserProfile(): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'GetUserProfile';
     return cmd;
   }
 
   public static sendUserNotification(sendStatusMail: boolean, sendStatusMessage: boolean, sendErrorMail: boolean, sendErrorMessage): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SendUserNotification';
     cmd.addParameter('StatusPerMail', sendStatusMail);
@@ -926,7 +940,7 @@ export class NetLoggerServiceCommands {
     return cmd;
   }
   public static sendStatusNotification(userID: number, since: Date, mobile_number: string, email: string, mode: number): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SendStatusNotification';
     cmd.addParameter('user_id', userID);
@@ -937,7 +951,7 @@ export class NetLoggerServiceCommands {
     return cmd;
   }
   public static sendDashboardReport(custID: number, dashboardID: number, stichdatum: Date): JsonCommand {
-    let cmd = new JsonCommand();
+    const cmd = new JsonCommand();
     cmd.ModuleName = 'Modules.NetLogger.Service.NetLoggerService';
     cmd.CommandName = 'SendDashboardReport';
     cmd.addParameter('cust_id', custID);

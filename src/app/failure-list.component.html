@@ -17,7 +17,7 @@
           <div style="font-size: large; margin-top: 4px;">{{item.key}}</div>
         </div>
       </div>
-      <
+      
       <div *dxTemplate="let subItem of 'item'" style="color: #ffffff;">
         <span><b>{{getSourceTypeCaption(subItem.event_source_type)}}:</b></span><span>&nbsp;&nbsp;{{subItem.source_caption}}</span>
         <span class="label" [ngClass]="getHealthStatusClassName(subItem.health_status)">{{getHealthStatusCaption(subItem.health_status)}}</span>

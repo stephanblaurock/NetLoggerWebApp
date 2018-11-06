@@ -18,6 +18,10 @@ export class MasterComponent implements OnInit {
   healthStatusColorClass = 'badge-success';
   healthStatusShortText = 'OK';
 
+  customerCaption = '';
+  currentDashboardRouterLink = undefined;
+  currentSensorenRouterLink = undefined;
+
   constructor(
     private netloggerService: NetloggerService,
     private router: Router
@@ -27,10 +31,28 @@ export class MasterComponent implements OnInit {
       this.current_user_name = this.netloggerService.current_user_name;
       this.isAdmin = this.netloggerService.currentUserIsAdmin();
       this.refreshUserHealthStatus();
+      this.refreshLinks();
     });
+    this.netloggerService.getCurrentCustomerObservable().subscribe(
+      currentCustomerCaption => {
+        this.refreshLinks();
+      }
+    );
     setTimeout(() => {
       this.refreshUserHealthStatus();
     }, 60000); // 600.000 = 10min, 60.000 = 1min
+  }
+
+  refreshLinks() {
+    if (this.netloggerService.current_customer) {
+      this.currentDashboardRouterLink = '/customers/' + this.netloggerService.current_customer.cust_id + '/dashboards';
+      this.currentSensorenRouterLink = '/customers/' + this.netloggerService.current_customer.cust_id + '/sensors';
+      this.customerCaption = this.netloggerService.current_customer.caption;
+    } else {
+      this.currentDashboardRouterLink = undefined;
+      this.currentSensorenRouterLink = undefined;
+      this.customerCaption = '';
+    }
   }
 
   ngOnInit() {

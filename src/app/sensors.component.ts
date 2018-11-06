@@ -100,7 +100,7 @@ export class SensorsComponent implements OnInit, OnDestroy {
 
   getTileStyle(sdeviceInfo: SummarizedSensorDeviceInfo) {
     if (!sdeviceInfo.is_active) {
-      return {'opacity': 0.4};
+      return {'opacity': 0.8};
     }
     return {};
   }

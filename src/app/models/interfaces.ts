@@ -107,7 +107,7 @@ export interface Sensor {
 export class DeviceGroup {
     device_group_id: number;
     sensor_group_id: number;
-    plant_id: number
+    plant_id: number;
     caption: string;
     is_active?: boolean;
     address?: string;

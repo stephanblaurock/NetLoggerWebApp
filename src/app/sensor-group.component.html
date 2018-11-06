@@ -4,6 +4,10 @@
   Sensor [{{deviceGroup.caption}}]
   <button *ngIf="allowEdit" type="button" class="btn btn-dark" (click)="editDeviceGroup()" style="text-align: left;"><img
     src="../assets/buttimages/pencil.png" style="height: 25px;"></button>
+    <button type="button" class="btn btn-dark ml-2" (click)="copyDeviceGroup()" style="text-align: left;"><img
+      src="../assets/buttimages/clipboard-copy.png" style="height: 25px;"></button>
+      <button type="button" class="btn btn-dark ml-2" (click)="deleteDeviceGroup()" style="text-align: left;"><img
+        src="../assets/buttimages/button-cancel.png" style="height: 25px;"></button>
 </h3>
 <div class="row">
   <div class="col-md-12" *ngIf="deviceGroup && deviceGroup.devices">

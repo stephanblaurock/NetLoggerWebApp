@@ -1,0 +1,33 @@
+<h3 class="section-headline">Meßspurdaten kopieren</h3>
+
+<div *ngIf="deviceGroup" class="row">
+  <div class="col">
+    <p>welche Meßspuren sollen kopiert werden?</p>
+    <div *ngFor="let dg of deviceGroup.devices">
+      <dx-check-box [(text)]="dg.caption + ' / ' + dg.unit" [(value)]="dg.is_active"></dx-check-box>
+    </div>
+    <br/>
+    <p>zu kopierender Zeitraum</p>
+    <p>von <dx-date-box type="date" [(value)]="selectedDateFrom" style="display: inline-block; vertical-align: middle"></dx-date-box>&nbsp;&nbsp;bis&nbsp;&nbsp;
+      <dx-date-box type="date" [(value)]="selectedDateTo" style="display: inline-block; vertical-align: middle"></dx-date-box></p>
+    <p>Ziel-Meßspur</p>
+    <p>neue anlegen: <dx-text-box [(text)]="destDeviceGroupCaption"></dx-text-box></p>
+    <p>in vorhandene kopieren:
+      <dx-select-box [items]="deviceGroupList" [showClearButton]="true" displayExpr="caption" valueExpr="device_group_id" [(value)]="selectedDestDeviceGroupID"></dx-select-box>
+    <br/>
+    <span class="text-netlogger-red">!ACHTUNG! Alle Daten dieses Zeitraums werden in der Ziel-Meßspur überschrieben!</span><br/><br/>
+    <div *ngIf="errortext" class="alert alert-danger" role="alert">
+      <span>{{errortext}}</span>
+    </div>
+    <div *ngIf="successtext" class="alert alert-success" role="alert">
+        <span>{{successtext}}</span>
+      </div>
+    <div *ngIf="!successtext">
+        <button class="btn btn-success" (click)="save()">Daten kopieren</button>
+        <button class="btn btn-danger ml-2" (click)="cancel()">abbrechen</button>
+    </div>
+    <div *ngIf="successtext">
+        <button class="btn btn-success" (click)="cancel()">zurück zu den Sensoren</button>
+    </div>
+  </div>
+</div>
